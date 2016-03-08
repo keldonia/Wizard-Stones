@@ -1,6 +1,6 @@
 var a = [[0,2,4,4],[4,0,4,8],[4,2,4,8],[0,0,4,2]];
 
-transform = function (matrix) {
+var transform = function (matrix) {
   var newMatrix = [];
   for (var i = 0; i < matrix[0].length; i++) {
     var newRow = [];
@@ -13,7 +13,7 @@ transform = function (matrix) {
   return newMatrix;
 };
 
-combine = function (row) {
+var combine = function (row, reversed) {
   var newCompositeRow = [];
   var score = 0;
   var length = row.length;
@@ -42,5 +42,9 @@ combine = function (row) {
     newCompositeRow.push(0);
   }
 
-  return { row: newCompositeRow, score: score };
+  return {
+    row: newCompositeRow,
+    score: score,
+    reversed: reversed
+  };
 };

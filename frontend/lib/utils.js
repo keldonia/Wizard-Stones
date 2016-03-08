@@ -13,7 +13,7 @@ var GameUtils = {
     return newMatrix;
   },
 
-  combine: function (row) {
+  combine: function (row, reversed) {
     var newCompositeRow = [];
     var score = 0;
     var length = row.length;
@@ -42,9 +42,12 @@ var GameUtils = {
       newCompositeRow.push(0);
     }
 
-    return { row: newCompositeRow, score: score };
+    return {
+      row: newCompositeRow,
+      score: score,
+      reversed: reversed
+    };
   }
-
 };
 
 module.exports = GameUtils;
