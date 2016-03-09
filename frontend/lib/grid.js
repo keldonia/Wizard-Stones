@@ -31,20 +31,19 @@ Grid.prototype.deleteTile = function (tile) {
 };
 
 Grid.prototype.move = function (direction) {
-  if (this.testDirection(direction)) {
     var moveResults = [];
     var testMatrix = this.directionFlip(this.grid, direction);
     var score = 0;
 
     var results = testMatrix.map( function(row) {
-      return Utils.combine(row, direction.reversed);
+      return Utils.combine(row, direction.reversed, direction.transform);
     });
     results.forEach( function (returnObj) {
       score += returnObj.score;
       moveResults.push(returnObj.row);
     });
 
-    var returnMatrix = this.directionFlip(moveResults, direction);
+    var returnMatrix = this.directionFlipBack(moveResults, direction);
 
     for (var i = 0; i < returnMatrix[0].length; i++) {
       for (var j = 0; j < returnMatrix.length; j++) {
@@ -58,7 +57,6 @@ Grid.prototype.move = function (direction) {
 
     this.grid = returnMatrix;
     return score;
-  }
 };
 
 
@@ -100,20 +98,47 @@ Grid.prototype.testDirection = function (direction) {
 };
 
 Grid.prototype.directionFlip = function (grid, direction) {
-  var testMatrix = grid;
-  if (direction.transform) {
-    testMatrix = Utils.transform(testMatrix);
-  }
+  var testMatrix = Utils.transform(Utils.transform(grid));
   if (direction.reversed) {
     var reversedMatrix = [];
 
     for (var i = 0; i < testMatrix.length; i++) {
-      reversedMatrix.push(testMatrix[i].reverse());
+      reversedMatrix.push(testMatrix[i].slice().reverse());
+    }
+
+    testMatrix = reversedMatrix;
+  }
+  if (direction.transform) {
+    testMatrix = Utils.transform(testMatrix);
+  }
+
+  return testMatrix;
+};
+
+Grid.prototype.directionFlipBack = function (grid, direction) {
+  var testMatrix = grid;
+  if (direction.reversed) {
+    var reversedMatrix = [];
+
+    for (var i = 0; i < testMatrix.length; i++) {
+      reversedMatrix.push(testMatrix[i].slice().reverse());
     }
 
     testMatrix = reversedMatrix;
   }
 
+  if (direction.transform) {
+    testMatrix = Utils.transform(testMatrix);
+  }
+  if (direction.reversed && direction.transform) {
+    var reversedMatrix = [];
+
+    for (var j = 0; j < testMatrix.length; j++) {
+      reversedMatrix.push(testMatrix[j].slice().reverse());
+    }
+
+    testMatrix = reversedMatrix;
+  }
   return testMatrix;
 };
 

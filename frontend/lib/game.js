@@ -34,7 +34,12 @@ Game.prototype.isLost = function () {
 Game.prototype.move = function (direction, cb) {
   var score = this.grid.move(GameConstants[direction]);
   this.addPiecesAfterMove();
-  cb({score: score, board: this.grid.grid });
+  cb({
+    score: score,
+    board: this.grid.grid,
+    won: this.isWon,
+    lost: this.isLost
+  });
 };
 
 Game.prototype.randomPieces = function (numPieces, grid) {

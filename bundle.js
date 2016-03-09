@@ -26550,7 +26550,11 @@
 	
 	  getInitialState: function () {
 	    this.game = new Game();
-	    return { board: this.game.grid.grid };
+	    return {
+	      board: this.game.grid.grid,
+	      won: false,
+	      lost: false
+	    };
 	  },
 	
 	  componentDidMount: function () {
@@ -26573,13 +26577,21 @@
 	
 	  upDateDisplay: function (gameObj) {
 	    ScoreActions.updateScore(gameObj.score);
-	    this.setState({ board: gameObj.board });
+	    this.setState({
+	      board: gameObj.board,
+	      won: gameObj.won,
+	      lost: gameObj.lost
+	    });
 	  },
 	
 	  resetGame: function (e) {
 	    e.preventDefault();
 	    this.game = new Game();
-	    this.setState({ board: this.game.grid.grid });
+	    this.setState({
+	      board: this.game.grid.grid,
+	      won: false,
+	      lost: false
+	    });
 	    ScoreActions.resetScore();
 	  },
 	
@@ -26651,7 +26663,12 @@
 	Game.prototype.move = function (direction, cb) {
 	  var score = this.grid.move(GameConstants[direction]);
 	  this.addPiecesAfterMove();
-	  cb({ score: score, board: this.grid.grid });
+	  cb({
+	    score: score,
+	    board: this.grid.grid,
+	    won: this.isWon,
+	    lost: this.isLost
+	  });
 	};
 	
 	Game.prototype.randomPieces = function (numPieces, grid) {
@@ -26707,33 +26724,38 @@
 	
 	    return newMatrix;
 	  },
-	
-	  combine: function (row, reversed) {
+	  // transform is an optional argument
+	  combine: function (row, reversed, transformed) {
 	    var newCompositeRow = [];
 	    var moveRow = row.slice();
 	    var score = 0;
 	    var length = moveRow.length;
+	    if (reversed && transformed) {
+	      moveRow.reverse();
+	    }
 	    for (var i = 0; i < length - 1; i++) {
-	      var abort = false;
-	      for (var k = i + 1; k < length && !abort; k++) {
-	        if (moveRow[i] !== 0 && moveRow[k] !== 0 && moveRow[i].value === moveRow[k].value) {
-	          newCompositeRow.push(moveRow[i]);
-	          var upgradedTile = newCompositeRow[newCompositeRow.length - 1];
-	          upgradedTile.value = moveRow[i].value * 2;
-	          upgradedTile.combinedTile({ x: moveRow[k].x, y: moveRow[k].y });
-	          score += moveRow[i].value;
-	          moveRow[i] = 0;
-	          moveRow[k] = 0;
-	          abort = true;
-	        } else if (moveRow[k] !== 0) {
-	          abort = true;
+	      if (moveRow[i] !== 0) {
+	        var abort = false;
+	        for (var k = i + 1; k < length && !abort; k++) {
+	          if (moveRow[i] !== 0 && moveRow[k] !== 0 && moveRow[i].value === moveRow[k].value) {
+	            newCompositeRow.push(moveRow[i]);
+	            var upgradedTile = newCompositeRow[newCompositeRow.length - 1];
+	            upgradedTile.value = moveRow[i].value * 2;
+	            // upgradedTile.combinedTile({ x: moveRow[k].x, y: moveRow[k].y } );
+	            score += moveRow[i].value;
+	            moveRow[i] = 0;
+	            moveRow[k] = 0;
+	            abort = true;
+	          } else if (moveRow[k] !== 0) {
+	            abort = true;
+	          }
 	        }
 	      }
 	      if (moveRow[i] !== 0) {
 	        newCompositeRow.push(moveRow[i]);
 	      }
 	    }
-	    newCompositeRow.push(moveRow[length - 1]);
+	    if (moveRow[length - 1]) newCompositeRow.push(moveRow[length - 1]);
 	
 	    var zeroFill = length - newCompositeRow.length;
 	
@@ -26788,34 +26810,32 @@
 	};
 	
 	Grid.prototype.move = function (direction) {
-	  if (this.testDirection(direction)) {
-	    var moveResults = [];
-	    var testMatrix = this.directionFlip(this.grid, direction);
-	    var score = 0;
+	  var moveResults = [];
+	  var testMatrix = this.directionFlip(this.grid, direction);
+	  var score = 0;
 	
-	    var results = testMatrix.map(function (row) {
-	      return Utils.combine(row, direction.reversed);
-	    });
-	    results.forEach(function (returnObj) {
-	      score += returnObj.score;
-	      moveResults.push(returnObj.row);
-	    });
+	  var results = testMatrix.map(function (row) {
+	    return Utils.combine(row, direction.reversed, direction.transform);
+	  });
+	  results.forEach(function (returnObj) {
+	    score += returnObj.score;
+	    moveResults.push(returnObj.row);
+	  });
 	
-	    var returnMatrix = this.directionFlip(moveResults, direction);
+	  var returnMatrix = this.directionFlipBack(moveResults, direction);
 	
-	    for (var i = 0; i < returnMatrix[0].length; i++) {
-	      for (var j = 0; j < returnMatrix.length; j++) {
-	        var currentTile = returnMatrix[i][j];
-	        if (currentTile) {
-	          currentTile.savePosition();
-	          currentTile.updatePosition({ x: i, y: j });
-	        }
+	  for (var i = 0; i < returnMatrix[0].length; i++) {
+	    for (var j = 0; j < returnMatrix.length; j++) {
+	      var currentTile = returnMatrix[i][j];
+	      if (currentTile) {
+	        currentTile.savePosition();
+	        currentTile.updatePosition({ x: i, y: j });
 	      }
 	    }
-	
-	    this.grid = returnMatrix;
-	    return score;
 	  }
+	
+	  this.grid = returnMatrix;
+	  return score;
 	};
 	
 	Grid.prototype.isWon = function () {
@@ -26856,20 +26876,47 @@
 	};
 	
 	Grid.prototype.directionFlip = function (grid, direction) {
-	  var testMatrix = grid;
-	  if (direction.transform) {
-	    testMatrix = Utils.transform(testMatrix);
-	  }
+	  var testMatrix = Utils.transform(Utils.transform(grid));
 	  if (direction.reversed) {
 	    var reversedMatrix = [];
 	
 	    for (var i = 0; i < testMatrix.length; i++) {
-	      reversedMatrix.push(testMatrix[i].reverse());
+	      reversedMatrix.push(testMatrix[i].slice().reverse());
+	    }
+	
+	    testMatrix = reversedMatrix;
+	  }
+	  if (direction.transform) {
+	    testMatrix = Utils.transform(testMatrix);
+	  }
+	
+	  return testMatrix;
+	};
+	
+	Grid.prototype.directionFlipBack = function (grid, direction) {
+	  var testMatrix = grid;
+	  if (direction.reversed) {
+	    var reversedMatrix = [];
+	
+	    for (var i = 0; i < testMatrix.length; i++) {
+	      reversedMatrix.push(testMatrix[i].slice().reverse());
 	    }
 	
 	    testMatrix = reversedMatrix;
 	  }
 	
+	  if (direction.transform) {
+	    testMatrix = Utils.transform(testMatrix);
+	  }
+	  if (direction.reversed && direction.transform) {
+	    var reversedMatrix = [];
+	
+	    for (var j = 0; j < testMatrix.length; j++) {
+	      reversedMatrix.push(testMatrix[j].slice().reverse());
+	    }
+	
+	    testMatrix = reversedMatrix;
+	  }
 	  return testMatrix;
 	};
 	

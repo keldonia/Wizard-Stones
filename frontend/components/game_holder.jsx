@@ -9,7 +9,11 @@ var GameWindow = require('./game_window');
 var GameHolder = React.createClass({
   getInitialState: function () {
     this.game = new Game();
-    return { board: this.game.grid.grid }
+    return ({
+      board: this.game.grid.grid,
+      won: false,
+      lost: false
+    });
   },
 
   componentDidMount: function () {
@@ -32,13 +36,21 @@ var GameHolder = React.createClass({
 
   upDateDisplay: function (gameObj) {
     ScoreActions.updateScore(gameObj.score);
-    this.setState({ board: gameObj.board })
+    this.setState({
+      board: gameObj.board,
+      won: gameObj.won,
+      lost: gameObj.lost
+    });
   },
 
   resetGame: function (e) {
     e.preventDefault();
     this.game = new Game();
-    this.setState({ board: this.game.grid.grid });
+    this.setState({
+      board: this.game.grid.grid,
+      won: false,
+      lost: false
+     });
     ScoreActions.resetScore();
   },
 
