@@ -18,16 +18,17 @@ var GameUtils = {
     var moveRow = row.slice();
     var score = 0;
     var length = moveRow.length;
-    var combined = [];
     for (var i = 0; i < length - 1; i++) {
       var abort = false;
       for (var k = i + 1; k < length && !abort; k++) {
-        if (moveRow[i] !== 0 && moveRow[i] === moveRow[k]) {
-          newCompositeRow.push(moveRow[i] * 2);
-          score += moveRow[i] * 2;
+        if (moveRow[i] !== 0 && moveRow[k] !== 0 && moveRow[i].value === moveRow[k].value) {
+          newCompositeRow.push(moveRow[i]);
+          var upgradedTile = newCompositeRow[newCompositeRow.length - 1];
+          upgradedTile.value = moveRow[i].value * 2;
+          upgradedTile.combinedTile({ x: moveRow[k].x, y: moveRow[k].y } );
+          score += moveRow[i].value;
           moveRow[i] = 0;
           moveRow[k] = 0;
-          combined.push(i).push(k);
           abort = true;
         } else if (moveRow[k] !== 0){
           abort = true;
@@ -48,8 +49,7 @@ var GameUtils = {
     return {
       row: newCompositeRow,
       score: score,
-      reversed: reversed,
-      combinedTiles: combined
+      reversed: reversed
     };
   }
 };

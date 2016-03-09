@@ -26532,8 +26532,28 @@
 	  displayName: 'GameHolder',
 	
 	
+	  newGame: function () {},
+	
 	  render: function () {
-	    return React.createElement('div', null);
+	    return React.createElement(
+	      'section',
+	      { className: 'game-holder' },
+	      React.createElement(
+	        'p',
+	        { className: 'invite' },
+	        'Join the numbers and get to the ',
+	        React.createElement(
+	          'b',
+	          null,
+	          '2048 tile!'
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'new=Game' },
+	        'New Game'
+	      )
+	    );
 	  }
 	
 	});
@@ -26547,6 +26567,7 @@
 	var Utils = __webpack_require__(186);
 	var Grid = __webpack_require__(187);
 	var Tile = __webpack_require__(188);
+	var GameConstants = __webpack_require__(189);
 	
 	var Game = function () {
 	  this.grid = new Grid(4, 4);
@@ -26561,6 +26582,16 @@
 	
 	Game.prototype.isWon = function () {
 	  return this.grid.isWon();
+	};
+	
+	Game.prototype.isLost = function () {
+	  return this.grid.isLost();
+	};
+	
+	Game.prototype.move = function (direction) {
+	  var score = this.grid.move(GameConstants[direction]);
+	
+	  return { grid: this.grid.grid, score: score };
 	};
 	
 	Game.prototype.randomPieces = function (numPieces, grid) {
@@ -26622,16 +26653,17 @@
 	    var moveRow = row.slice();
 	    var score = 0;
 	    var length = moveRow.length;
-	    var combined = [];
 	    for (var i = 0; i < length - 1; i++) {
 	      var abort = false;
 	      for (var k = i + 1; k < length && !abort; k++) {
-	        if (moveRow[i] !== 0 && moveRow[i] === moveRow[k]) {
-	          newCompositeRow.push(moveRow[i] * 2);
-	          score += moveRow[i] * 2;
+	        if (moveRow[i] !== 0 && moveRow[k] !== 0 && moveRow[i].value === moveRow[k].value) {
+	          newCompositeRow.push(moveRow[i]);
+	          var upgradedTile = newCompositeRow[newCompositeRow.length - 1];
+	          upgradedTile.value = moveRow[i].value * 2;
+	          upgradedTile.combinedTile({ x: moveRow[k].x, y: moveRow[k].y });
+	          score += moveRow[i].value;
 	          moveRow[i] = 0;
 	          moveRow[k] = 0;
-	          combined.push(i).push(k);
 	          abort = true;
 	        } else if (moveRow[k] !== 0) {
 	          abort = true;
@@ -26652,8 +26684,7 @@
 	    return {
 	      row: newCompositeRow,
 	      score: score,
-	      reversed: reversed,
-	      combinedTiles: combined
+	      reversed: reversed
 	    };
 	  }
 	};
@@ -26666,16 +26697,10 @@
 
 	var Tile = __webpack_require__(188);
 	var Utils = __webpack_require__(186);
-	
-	var DIRECTIONS = {
-	  LEFT: { transform: false, reverse: false },
-	  RIGHT: { transform: false, reverse: true },
-	  UP: { transform: true, reverse: false },
-	  DOWN: { transform: true, reverse: true }
-	};
+	var GameConstants = './constants';
 	
 	var Grid = function (x, y) {
-	  this.grid = this.blankGrid();
+	  this.grid = this.blankGrid(x, y);
 	  this.won = false;
 	};
 	
@@ -26702,19 +26727,90 @@
 	  this.grid[tile.x][tile.y] = 0;
 	};
 	
+	Grid.prototype.move = function (direction) {
+	  if (this.testDirection(direction)) {
+	    var moveResults = [];
+	    var testMatrix = this.directionFlip(this.grid, direction);
+	    var score = 0;
+	
+	    var results = testMatrix.map(function (row) {
+	      return Utils.combine(row, direction.reversed);
+	    });
+	    results.forEach(function (returnObj) {
+	      score += returnObj.score;
+	      moveResults.push(returnObj.row);
+	    });
+	
+	    var returnMatrix = this.directionFlip(moveResults, direction);
+	
+	    for (var i = 0; i < returnMatrix[0].length; i++) {
+	      for (var j = 0; j < returnMatrix.length; j++) {
+	        var currentTile = returnMatrix[i][j];
+	        if (currentTile) {
+	          currentTile.savePosition();
+	          currentTile.updatePosition({ x: i, y: j });
+	        }
+	      }
+	    }
+	
+	    this.grid = returnMatrix;
+	    return score;
+	  }
+	};
+	
 	Grid.prototype.isWon = function () {
 	  return this.won;
 	};
 	
 	Grid.prototype.isLost = function () {
-	  if (this.full()) {}
+	  if (this.full()) {
+	    if (this.posDirections.includes(false)) {
+	      return false;
+	    } else {
+	      return true;
+	    }
+	  } else {
+	    return false;
+	  }
+	};
+	
+	Grid.prototype.posDirections = function () {
+	  var posDirections = GameConstants.map(function (direction) {
+	    return this.testDirection(direction);
+	  }, this);
+	
+	  return posDirections;
 	};
 	
 	Grid.prototype.testDirection = function (direction) {
-	  var testMatrix = this.grid;
+	  var testMatrix = this.directionFlip(this.grid, direction);
+	
+	  for (var j = 0; j < testMatrix.length; j++) {
+	    var attemptedCombine = Utils.combine(testMatrix[j], direction.reversed);
+	    if (attemptedCombine.row.includes(0)) {
+	      return true;
+	    }
+	  }
+	
+	  return false;
+	};
+	
+	Grid.prototype.directionFlip = function (grid, direction) {
+	  var testMatrix = grid;
 	  if (direction.transform) {
 	    testMatrix = Utils.transform(testMatrix);
 	  }
+	  if (direction.reversed) {
+	    var reversedMatrix = [];
+	
+	    for (var i = 0; i < testMatrix.length; i++) {
+	      reversedMatrix.push(testMatrix[i].reverse());
+	    }
+	
+	    testMatrix = reversedMatrix;
+	  }
+	
+	  return testMatrix;
 	};
 	
 	Grid.prototype.values = function () {
@@ -26722,7 +26818,9 @@
 	  for (var i = 0; i < this.grid[0].length; i++) {
 	    var rowValues = [];
 	    for (var j = 0; j < this.grid.length; j++) {
-	      rowValues(this.grid[i][j].value);
+	      if (this.grid[i][j] !== 0) {
+	        rowValues(this.grid[i][j].value);
+	      }
 	    }
 	    values.push(rowValues);
 	  }
@@ -26778,7 +26876,7 @@
 	  this.y = tileObj.pos.y;
 	  this.value = tileObj.value;
 	  this.priorPosition = null;
-	  this.previous = null;
+	  this.combinedTilePos = null;
 	}
 	
 	Tile.prototype.savePosition = function () {
@@ -26788,6 +26886,10 @@
 	Tile.prototype.updatePosition = function (pos) {
 	  this.x = pos.x;
 	  this.y = pos.y;
+	};
+	
+	Tile.prototype.combinedTile = function (pos) {
+	  this.combinedTile = pos;
 	};
 	
 	Tile.prototype.serialize = function () {
@@ -26801,6 +26903,19 @@
 	};
 	
 	module.exports = Tile;
+
+/***/ },
+/* 189 */
+/***/ function(module, exports) {
+
+	var GameConstants = {
+	  LEFT: { transform: false, reversed: false },
+	  RIGHT: { transform: false, reversed: true },
+	  UP: { transform: true, reversed: false },
+	  DOWN: { transform: true, reversed: true }
+	};
+	
+	module.exports = GameConstants;
 
 /***/ }
 /******/ ]);

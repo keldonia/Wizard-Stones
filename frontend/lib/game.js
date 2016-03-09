@@ -1,6 +1,7 @@
 var Utils = require('./utils');
 var Grid = require('./grid');
 var Tile = require('./tile');
+var GameConstants = require('./constants');
 
 var Game = function () {
   this.grid = new Grid(4,4);
@@ -18,6 +19,15 @@ Game.prototype.isWon = function () {
   return this.grid.isWon();
 };
 
+Game.prototype.isLost = function () {
+  return this.grid.isLost();
+};
+
+Game.prototype.move = function (direction) {
+  var score = this.grid.move(GameConstants[direction]);
+
+  return { grid: this.grid.grid, score: score } ;
+};
 
 Game.prototype.randomPieces = function (numPieces, grid) {
   var availablePositions = this.grid.availablePositions(grid);
@@ -51,7 +61,5 @@ Game.prototype.randomPieceValue = function () {
 Game.prototype.randomNumOfPieces = function () {
   return Math.random() < 0.8 ? 1 : 2;
 };
-
-
 
 module.exports = Game;

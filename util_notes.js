@@ -15,27 +15,35 @@ var transform = function (matrix) {
 
 var combine = function (row, reversed) {
   var newCompositeRow = [];
+  var moveRow = row.slice();
   var score = 0;
+  var length = moveRow.length;
   var combined = [];
-  var length = row.length;
   for (var i = 0; i < length - 1; i++) {
     var abort = false;
     for (var k = i + 1; k < length && !abort; k++) {
-      if (row[i] && row[i] === row[k]) {
-        newCompositeRow.push(row[i] * 2);
-        score += row[i] * 2;
-        row[i] = 0;
-        row[k] = 0;
+      if (moveRow[i] !== 0 && moveRow[k] !== 0 && moveRow[i].value === moveRow[k].value) {
+        debugger
+        newCompositeRow.push(moveRow[i]);
+        newCompositeRow[newCompositeRow.length - 1].value = moveRow[i].value * 2;
+        score += moveRow[i].value;
+        moveRow[i] = 0;
+        moveRow[k] = 0;
+        if (reversed) {
+          combined.push(length - i - 1).push(length - k - 1);
+        } else {
+          combined.push([i,k]);
+        }
         abort = true;
-      } else if (!row[k]){
+      } else if (moveRow[k] !== 0){
         abort = true;
       }
     }
-    if (row[i]) {
-      newCompositeRow.push(row[i]);
+    if (moveRow[i] !== 0) {
+      newCompositeRow.push(moveRow[i]);
     }
   }
-  newCompositeRow.push(row[length - 1]);
+  newCompositeRow.push(moveRow[length - 1]);
 
   var zeroFill = length - newCompositeRow.length;
 
