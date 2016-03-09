@@ -17,6 +17,7 @@ var GameUtils = {
     var newCompositeRow = [];
     var score = 0;
     var length = row.length;
+    var combined = [];
     for (var i = 0; i < length - 1; i++) {
       var abort = false;
       for (var k = i + 1; k < length && !abort; k++) {
@@ -25,6 +26,7 @@ var GameUtils = {
           score += row[i] * 2;
           row[i] = 0;
           row[k] = 0;
+          combined.push(i).push(k);
           abort = true;
         } else if (row[k] !== 0){
           abort = true;
@@ -45,7 +47,8 @@ var GameUtils = {
     return {
       row: newCompositeRow,
       score: score,
-      reversed: reversed
+      reversed: reversed,
+      combinedTiles: combined
     };
   }
 };

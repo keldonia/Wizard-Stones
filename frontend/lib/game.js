@@ -1,66 +1,50 @@
 var Utils = require('./utils');
+var Grid = require('./grid');
+var Tile = require('./tile');
 
 var Game = function () {
-  this.grid = this.newGrid();
+  this.grid = new Grid();
 
 };
 
-Game.prototype.setUp = function (grid) {
-  var startPieces = this.randomPieces(2, grid);
-
+Game.prototype.setUp = function () {
+  var startPieces = this.randomPieces(2, this.grid);
+  debugger
+  for (var i = 0; i < startPieces.length; i++) {
+    this.grid.addTile(startPieces[i]);
+  }
 };
 
-
-Game.prototype.newGrid = function () {
-  return [
-    [0,0,0,0],
-    [0,0,0,0],
-    [0,0,0,0],
-    [0,0,0,0]
-  ];
-};
 
 Game.prototype.randomPieces = function (numPieces, grid) {
-  var availablePositions = this.availablePositions(grid);
+  var availablePositions = this.grid.availablePositions(grid);
   var newRandomPieces = [];
 
-  var pos = this.randomPos(availablePositions);
+  if (availablePositions.length > 0) {
+    var pos = this.grid.randomAvailablePosition(availablePositions);
 
-  newRandomPieces.push({ position: availablePositions[pos], value: this.randomValue() });
+    newRandomPieces.push(new Tile({
+      pos: {x: pos[0], y: pos[1]},
+      value: this.randomPieceValue()
+    }));
+    availablePositions.splice(pos,1);
 
-  if (numPieces > 1) {
-
-  }
-};
-
-Game.prototype.randomPos = function (availablePositions) {
-  return availablePositions[Math.floor(Math.random() * availablePositions.length)];
-};
-
-Game.prototype.randomValue = function () {
-
-};
-
-Game.prototype.positionsAvailable = function (grid) {
-  if (this.availablePositions(grid).length === 0) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-Game.prototype.availablePositions = function (grid) {
-  var availablePos = [];
-  for (var i = 0; i < 3; i++) {
-    for (var j = 0; j < 3; j++) {
-      if (grid[i][j] === 0) {
-        availablePos.push(grid[i][j]);
-      }
+    if (numPieces > 1 && availablePositions.length > 0) {
+      pos = this.grid.randomAvailablePosition(availablePositions);
+      newRandomPieces.push(new Tile({
+        pos: {x: pos[0], y: pos[1]},
+        value: this.randomPieceValue()
+      }));
     }
   }
 
-  return availablePos;
+  return newRandomPieces;
 };
+
+Game.prototype.randomPieceValue = function () {
+  return Math.random() < 0.9 ? 2 : 4;
+};
+
 
 
 module.exports = Game;

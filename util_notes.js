@@ -16,21 +16,22 @@ var transform = function (matrix) {
 var combine = function (row, reversed) {
   var newCompositeRow = [];
   var score = 0;
+  var combined = [];
   var length = row.length;
   for (var i = 0; i < length - 1; i++) {
     var abort = false;
     for (var k = i + 1; k < length && !abort; k++) {
-      if (row[i] !== 0 && row[i] === row[k]) {
+      if (row[i] && row[i] === row[k]) {
         newCompositeRow.push(row[i] * 2);
         score += row[i] * 2;
         row[i] = 0;
         row[k] = 0;
         abort = true;
-      } else if (row[k] !== 0){
+      } else if (!row[k]){
         abort = true;
       }
     }
-    if (row[i] !== 0) {
+    if (row[i]) {
       newCompositeRow.push(row[i]);
     }
   }
@@ -45,6 +46,7 @@ var combine = function (row, reversed) {
   return {
     row: newCompositeRow,
     score: score,
-    reversed: reversed
+    reversed: reversed,
+    combinedTiles: combined
   };
 };

@@ -19648,6 +19648,7 @@
 	var React = __webpack_require__(1);
 	var Header = __webpack_require__(160);
 	var Explanation = __webpack_require__(183);
+	var GameHolder = __webpack_require__(184);
 	
 	var GameSplash = React.createClass({
 	  displayName: 'GameSplash',
@@ -19658,6 +19659,7 @@
 	      'div',
 	      null,
 	      React.createElement(Header, null),
+	      React.createElement(GameHolder, null),
 	      React.createElement(Explanation, null)
 	    );
 	  }
@@ -26516,6 +26518,218 @@
 	});
 	
 	module.exports = Explanation;
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Game = __webpack_require__(185);
+	var React = __webpack_require__(1);
+	
+	window.Game = new Game();
+	
+	var GameHolder = React.createClass({
+	  displayName: 'GameHolder',
+	
+	
+	  render: function () {
+	    return React.createElement('div', null);
+	  }
+	
+	});
+	
+	module.exports = GameHolder;
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Utils = __webpack_require__(186);
+	var Grid = __webpack_require__(187);
+	var Tile = __webpack_require__(188);
+	
+	var Game = function () {
+	  this.grid = new Grid();
+	};
+	
+	Game.prototype.setUp = function () {
+	  var startPieces = this.randomPieces(2, this.grid);
+	  debugger;
+	  for (var i = 0; i < startPieces.length; i++) {
+	    this.grid.addTile(startPieces[i]);
+	  }
+	};
+	
+	Game.prototype.randomPieces = function (numPieces, grid) {
+	  var availablePositions = this.grid.availablePositions(grid);
+	  var newRandomPieces = [];
+	
+	  if (availablePositions.length > 0) {
+	    var pos = this.grid.randomAvailablePosition(availablePositions);
+	
+	    newRandomPieces.push(new Tile({
+	      pos: { x: pos[0], y: pos[1] },
+	      value: this.randomPieceValue()
+	    }));
+	    availablePositions.splice(pos, 1);
+	
+	    if (numPieces > 1 && availablePositions.length > 0) {
+	      pos = this.grid.randomAvailablePosition(availablePositions);
+	      newRandomPieces.push(new Tile({
+	        pos: { x: pos[0], y: pos[1] },
+	        value: this.randomPieceValue()
+	      }));
+	    }
+	  }
+	
+	  return newRandomPieces;
+	};
+	
+	Game.prototype.randomPieceValue = function () {
+	  return Math.random() < 0.9 ? 2 : 4;
+	};
+	
+	module.exports = Game;
+
+/***/ },
+/* 186 */
+/***/ function(module, exports) {
+
+	var GameUtils = {
+	
+	  transform: function (matrix) {
+	    var newMatrix = [];
+	    for (var i = 0; i < matrix[0].length; i++) {
+	      var newRow = [];
+	      for (var j = 0; j < matrix.length; j++) {
+	        newRow.push(matrix[j][i]);
+	      }
+	      newMatrix.push(newRow);
+	    }
+	
+	    return newMatrix;
+	  },
+	
+	  combine: function (row, reversed) {
+	    var newCompositeRow = [];
+	    var score = 0;
+	    var length = row.length;
+	    var combined = [];
+	    for (var i = 0; i < length - 1; i++) {
+	      var abort = false;
+	      for (var k = i + 1; k < length && !abort; k++) {
+	        if (row[i] !== 0 && row[i] === row[k]) {
+	          newCompositeRow.push(row[i] * 2);
+	          score += row[i] * 2;
+	          row[i] = 0;
+	          row[k] = 0;
+	          combined.push(i).push(k);
+	          abort = true;
+	        } else if (row[k] !== 0) {
+	          abort = true;
+	        }
+	      }
+	      if (row[i] !== 0) {
+	        newCompositeRow.push(row[i]);
+	      }
+	    }
+	    newCompositeRow.push(row[length - 1]);
+	
+	    var zeroFill = length - newCompositeRow.length;
+	
+	    for (var j = 0; j < zeroFill; j++) {
+	      newCompositeRow.push(0);
+	    }
+	
+	    return {
+	      row: newCompositeRow,
+	      score: score,
+	      reversed: reversed,
+	      combinedTiles: combined
+	    };
+	  }
+	};
+	
+	module.exports = GameUtils;
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Tile = __webpack_require__(188);
+	
+	var Grid = function () {
+	  this.grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+	};
+	
+	Grid.prototype.addTile = function (tile) {
+	  this.grid[tile.x][tile.y] = tile;
+	};
+	
+	Grid.prototype.deleteTile = function (tile) {
+	  this.grid[tile.x][tile.y] = 0;
+	};
+	
+	Grid.prototype.randomAvailablePosition = function (availablePositions) {
+	  return availablePositions[Math.floor(Math.random() * availablePositions.length)];
+	};
+	
+	Grid.prototype.positionsAvailable = function () {
+	  if (this.availablePositions(this.grid).length === 0) {
+	    return true;
+	  } else {
+	    return false;
+	  }
+	};
+	
+	Grid.prototype.availablePositions = function () {
+	  var availablePos = [];
+	  var that = this;
+	  for (var i = 0; i < 4; i++) {
+	    for (var j = 0; j < 4; j++) {
+	      if (that.grid[i][j] === 0) {
+	        availablePos.push([i, j]);
+	      }
+	    }
+	  }
+	
+	  return availablePos;
+	};
+	
+	module.exports = Grid;
+
+/***/ },
+/* 188 */
+/***/ function(module, exports) {
+
+	function Tile(tileObj) {
+	  this.x = tileObj.pos.x;
+	  this.y = tileObj.pos.y;
+	  this.value = tileObj.value;
+	  this.priorPosition = null;
+	  this.previous = null;
+	}
+	
+	Tile.prototype.savePosition = function () {
+	  this.priorPosition = { x: this.x, y: this.y };
+	};
+	
+	Tile.prototype.updatePosition = function (pos) {
+	  this.x = pos.x;
+	  this.y = pos.y;
+	};
+	
+	Tile.prototype.serialize = function () {
+	  return {
+	    pos: {
+	      x: this.x,
+	      y: this.y
+	    },
+	    value: this.value
+	  };
+	};
+	
+	module.exports = Tile;
 
 /***/ }
 /******/ ]);

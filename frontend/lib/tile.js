@@ -1,9 +1,9 @@
-function Tile(pos, value) {
-  this.x                  = pos.x;
-  this.y                  = pos.y;
-  this.value              = value || 2;
-  this.previousPosition   = null;
-  this.previous           = null;
+function Tile(tileObj) {
+  this.x              = tileObj.pos.x;
+  this.y              = tileObj.pos.y;
+  this.value          = tileObj.value;
+  this.priorPosition  = null;
+  this.previous       = null;
 }
 
 Tile.prototype.savePosition = function () {
@@ -24,3 +24,5 @@ Tile.prototype.serialize = function () {
     value: this.value
   };
 };
+
+module.exports = Tile;
