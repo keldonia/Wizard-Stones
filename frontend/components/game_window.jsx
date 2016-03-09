@@ -36,9 +36,9 @@ var GameWidow = React.createClass({
   getTiles: function (row) {
     return row.map( function(tile, idx) {
       if (tile === 0) {
-        return <li key={idx} className="empty group"></li>
+        return <li key={idx}><div className="empty group"></div></li>
       } else {
-        return <li key={idx} className={tile.value}>{tile.value}</li>
+        return <li key={idx}><div className={tile.value}>{tile.value}</div></li>
       }
     })
   },

@@ -27,8 +27,7 @@ var GameHolder = React.createClass({
 
   move: function (e) {
     e.preventDefault();
-    var keyCode = KeyMap[e.keyCode]
-    console.log(keyCode);
+    var keyCode = KeyMap[e.keyCode];
     if (keyCode) {
       this.game.move(keyCode, this.upDateDisplay );
     }

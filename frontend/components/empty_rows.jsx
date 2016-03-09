@@ -7,28 +7,28 @@ var EmptyRows = React.createClass({
     return (
       <ul>
         <ul className="inner">
-          <li className="empty group"></li>
-          <li className="empty group"></li>
-          <li className="empty group"></li>
-          <li className="empty group"></li>
+          <li><div className="empty group"></div></li>
+          <li><div className="empty group"></div></li>
+          <li><div className="empty group"></div></li>
+          <li><div className="empty group"></div></li>
         </ul>
         <ul className="inner">
-          <li className="empty group"></li>
-          <li className="empty group"></li>
-          <li className="empty group"></li>
-          <li className="empty group"></li>
+          <li><div className="empty group"></div></li>
+          <li><div className="empty group"></div></li>
+          <li><div className="empty group"></div></li>
+          <li><div className="empty group"></div></li>
         </ul>
         <ul className="inner">
-          <li className="empty group"></li>
-          <li className="empty group"></li>
-          <li className="empty group"></li>
-          <li className="empty group"></li>
+          <li><div className="empty group"></div></li>
+          <li><div className="empty group"></div></li>
+          <li><div className="empty group"></div></li>
+          <li><div className="empty group"></div></li>
         </ul>
         <ul className="inner">
-          <li className="empty group"></li>
-          <li className="empty group"></li>
-          <li className="empty group"></li>
-          <li className="empty group"></li>
+          <li><div className="empty group"></div></li>
+          <li><div className="empty group"></div></li>
+          <li><div className="empty group"></div></li>
+          <li><div className="empty group"></div></li>
         </ul>
       </ul>
     );

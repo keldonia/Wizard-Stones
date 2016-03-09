@@ -26569,7 +26569,6 @@
 	  move: function (e) {
 	    e.preventDefault();
 	    var keyCode = KeyMap[e.keyCode];
-	    console.log(keyCode);
 	    if (keyCode) {
 	      this.game.move(keyCode, this.upDateDisplay);
 	    }
@@ -27089,12 +27088,20 @@
 	  getTiles: function (row) {
 	    return row.map(function (tile, idx) {
 	      if (tile === 0) {
-	        return React.createElement('li', { key: idx, className: 'empty group' });
+	        return React.createElement(
+	          'li',
+	          { key: idx },
+	          React.createElement('div', { className: 'empty group' })
+	        );
 	      } else {
 	        return React.createElement(
 	          'li',
-	          { key: idx, className: tile.value },
-	          tile.value
+	          { key: idx },
+	          React.createElement(
+	            'div',
+	            { className: tile.value },
+	            tile.value
+	          )
 	        );
 	      }
 	    });
@@ -27132,34 +27139,98 @@
 	      React.createElement(
 	        "ul",
 	        { className: "inner" },
-	        React.createElement("li", { className: "empty group" }),
-	        React.createElement("li", { className: "empty group" }),
-	        React.createElement("li", { className: "empty group" }),
-	        React.createElement("li", { className: "empty group" })
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        ),
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        ),
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        ),
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        )
 	      ),
 	      React.createElement(
 	        "ul",
 	        { className: "inner" },
-	        React.createElement("li", { className: "empty group" }),
-	        React.createElement("li", { className: "empty group" }),
-	        React.createElement("li", { className: "empty group" }),
-	        React.createElement("li", { className: "empty group" })
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        ),
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        ),
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        ),
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        )
 	      ),
 	      React.createElement(
 	        "ul",
 	        { className: "inner" },
-	        React.createElement("li", { className: "empty group" }),
-	        React.createElement("li", { className: "empty group" }),
-	        React.createElement("li", { className: "empty group" }),
-	        React.createElement("li", { className: "empty group" })
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        ),
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        ),
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        ),
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        )
 	      ),
 	      React.createElement(
 	        "ul",
 	        { className: "inner" },
-	        React.createElement("li", { className: "empty group" }),
-	        React.createElement("li", { className: "empty group" }),
-	        React.createElement("li", { className: "empty group" }),
-	        React.createElement("li", { className: "empty group" })
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        ),
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        ),
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        ),
+	        React.createElement(
+	          "li",
+	          null,
+	          React.createElement("div", { className: "empty group" })
+	        )
 	      )
 	    );
 	  }
