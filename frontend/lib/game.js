@@ -3,16 +3,19 @@ var Grid = require('./grid');
 var Tile = require('./tile');
 
 var Game = function () {
-  this.grid = new Grid();
+  this.grid = new Grid(4,4);
 
 };
 
 Game.prototype.setUp = function () {
   var startPieces = this.randomPieces(2, this.grid);
-  debugger
   for (var i = 0; i < startPieces.length; i++) {
     this.grid.addTile(startPieces[i]);
   }
+};
+
+Game.prototype.isWon = function () {
+  return this.grid.isWon();
 };
 
 
@@ -43,6 +46,10 @@ Game.prototype.randomPieces = function (numPieces, grid) {
 
 Game.prototype.randomPieceValue = function () {
   return Math.random() < 0.9 ? 2 : 4;
+};
+
+Game.prototype.randomNumOfPieces = function () {
+  return Math.random() < 0.8 ? 1 : 2;
 };
 
 

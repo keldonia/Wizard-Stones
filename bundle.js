@@ -26549,15 +26549,18 @@
 	var Tile = __webpack_require__(188);
 	
 	var Game = function () {
-	  this.grid = new Grid();
+	  this.grid = new Grid(4, 4);
 	};
 	
 	Game.prototype.setUp = function () {
 	  var startPieces = this.randomPieces(2, this.grid);
-	  debugger;
 	  for (var i = 0; i < startPieces.length; i++) {
 	    this.grid.addTile(startPieces[i]);
 	  }
+	};
+	
+	Game.prototype.isWon = function () {
+	  return this.grid.isWon();
 	};
 	
 	Game.prototype.randomPieces = function (numPieces, grid) {
@@ -26589,6 +26592,10 @@
 	  return Math.random() < 0.9 ? 2 : 4;
 	};
 	
+	Game.prototype.randomNumOfPieces = function () {
+	  return Math.random() < 0.8 ? 1 : 2;
+	};
+	
 	module.exports = Game;
 
 /***/ },
@@ -26612,28 +26619,29 @@
 	
 	  combine: function (row, reversed) {
 	    var newCompositeRow = [];
+	    var moveRow = row.slice();
 	    var score = 0;
-	    var length = row.length;
+	    var length = moveRow.length;
 	    var combined = [];
 	    for (var i = 0; i < length - 1; i++) {
 	      var abort = false;
 	      for (var k = i + 1; k < length && !abort; k++) {
-	        if (row[i] !== 0 && row[i] === row[k]) {
-	          newCompositeRow.push(row[i] * 2);
-	          score += row[i] * 2;
-	          row[i] = 0;
-	          row[k] = 0;
+	        if (moveRow[i] !== 0 && moveRow[i] === moveRow[k]) {
+	          newCompositeRow.push(moveRow[i] * 2);
+	          score += moveRow[i] * 2;
+	          moveRow[i] = 0;
+	          moveRow[k] = 0;
 	          combined.push(i).push(k);
 	          abort = true;
-	        } else if (row[k] !== 0) {
+	        } else if (moveRow[k] !== 0) {
 	          abort = true;
 	        }
 	      }
-	      if (row[i] !== 0) {
-	        newCompositeRow.push(row[i]);
+	      if (moveRow[i] !== 0) {
+	        newCompositeRow.push(moveRow[i]);
 	      }
 	    }
-	    newCompositeRow.push(row[length - 1]);
+	    newCompositeRow.push(moveRow[length - 1]);
 	
 	    var zeroFill = length - newCompositeRow.length;
 	
@@ -26657,17 +26665,77 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var Tile = __webpack_require__(188);
+	var Utils = __webpack_require__(186);
 	
-	var Grid = function () {
-	  this.grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+	var DIRECTIONS = {
+	  LEFT: { transform: false, reverse: false },
+	  RIGHT: { transform: false, reverse: true },
+	  UP: { transform: true, reverse: false },
+	  DOWN: { transform: true, reverse: true }
+	};
+	
+	var Grid = function (x, y) {
+	  this.grid = this.blankGrid();
+	  this.won = false;
+	};
+	
+	Grid.prototype.blankGrid = function (x, y) {
+	  var blankGrid = [];
+	  for (var i = 0; i < x; i++) {
+	    var newRow = [];
+	    for (var j = 0; j < y; j++) {
+	      newRow.push(0);
+	    }
+	    blankGrid.push(newRow);
+	  }
+	  return blankGrid;
 	};
 	
 	Grid.prototype.addTile = function (tile) {
 	  this.grid[tile.x][tile.y] = tile;
+	  if (tile.value === 2048) {
+	    this.won = true;
+	  }
 	};
 	
 	Grid.prototype.deleteTile = function (tile) {
 	  this.grid[tile.x][tile.y] = 0;
+	};
+	
+	Grid.prototype.isWon = function () {
+	  return this.won;
+	};
+	
+	Grid.prototype.isLost = function () {
+	  if (this.full()) {}
+	};
+	
+	Grid.prototype.testDirection = function (direction) {
+	  var testMatrix = this.grid;
+	  if (direction.transform) {
+	    testMatrix = Utils.transform(testMatrix);
+	  }
+	};
+	
+	Grid.prototype.values = function () {
+	  var values = this.blankGrid();
+	  for (var i = 0; i < this.grid[0].length; i++) {
+	    var rowValues = [];
+	    for (var j = 0; j < this.grid.length; j++) {
+	      rowValues(this.grid[i][j].value);
+	    }
+	    values.push(rowValues);
+	  }
+	
+	  return values;
+	};
+	
+	Grid.prototype.full = function () {
+	  if (this.positionsAvailable().length < 1) {
+	    return true;
+	  } else {
+	    return false;
+	  }
 	};
 	
 	Grid.prototype.randomAvailablePosition = function (availablePositions) {
@@ -26685,8 +26753,11 @@
 	Grid.prototype.availablePositions = function () {
 	  var availablePos = [];
 	  var that = this;
-	  for (var i = 0; i < 4; i++) {
-	    for (var j = 0; j < 4; j++) {
+	  var xlen = this.grid[0].length;
+	  var ylen = this.grid.length;
+	
+	  for (var i = 0; i < xlen; i++) {
+	    for (var j = 0; j < ylen; j++) {
 	      if (that.grid[i][j] === 0) {
 	        availablePos.push([i, j]);
 	      }
