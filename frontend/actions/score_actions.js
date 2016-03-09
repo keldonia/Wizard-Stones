@@ -8,9 +8,16 @@ var ScoreActions = {
       score: addedScore
     });
   },
+  
   resetScores: function () {
     AppDispatcher.dispatch({
       actionType: ScoreConstants.RESET_SCORES
+    });
+  },
+
+  resetScore: function () {
+    AppDispatcher.dispatch({
+      actionType: ScoreConstants.RESET_SCORE
     });
   }
 

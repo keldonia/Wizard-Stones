@@ -19699,8 +19699,8 @@
 	
 	  _onChange: function () {
 	    this.setState({
-	      score: ScoreStore.score,
-	      topScore: ScoreStore.topScore
+	      score: ScoreStore.score(),
+	      topScore: ScoreStore.topScore()
 	    });
 	  },
 	
@@ -19786,6 +19786,10 @@
 	      ScoreStore.resetScores();
 	      ScoreStore.__emitChange();
 	      break;
+	    case ScoreConstants.RESET_SCORE:
+	      ScoreStore.resetScore();
+	      ScoreStore.__emitChange();
+	      break;
 	    default:
 	
 	  }
@@ -19796,8 +19800,12 @@
 	  _topScore = "0";
 	};
 	
+	ScoreStore.resetScore = function () {
+	  _score = "0";
+	};
+	
 	ScoreStore.updateScore = function (score) {
-	  _score = _score + score;
+	  _score = parseInt(_score) + score;
 	  if (_score > _topScore) {
 	    _topScore = _score;
 	  }
@@ -26462,7 +26470,8 @@
 
 	var ScoreConstants = {
 	  UPDATE_SCORE: "UPDATE_SCORE",
-	  RESET_SCORES: "RESET_SCORES"
+	  RESET_SCORES: "RESET_SCORES",
+	  RESET_SCORE: "RESET_SCORE"
 	};
 	
 	module.exports = ScoreConstants;
@@ -26481,9 +26490,16 @@
 	      score: addedScore
 	    });
 	  },
+	
 	  resetScores: function () {
 	    AppDispatcher.dispatch({
 	      actionType: ScoreConstants.RESET_SCORES
+	    });
+	  },
+	
+	  resetScore: function () {
+	    AppDispatcher.dispatch({
+	      actionType: ScoreConstants.RESET_SCORE
 	    });
 	  }
 	
@@ -26525,16 +26541,51 @@
 
 	var Game = __webpack_require__(185);
 	var React = __webpack_require__(1);
-	
-	window.Game = new Game();
+	var KeyMap = __webpack_require__(190);
+	var ScoreActions = __webpack_require__(182);
+	var GameWindow = __webpack_require__(191);
 	
 	var GameHolder = React.createClass({
 	  displayName: 'GameHolder',
 	
+	  getInitialState: function () {
+	    this.game = new Game();
+	    return { board: this.game.grid.grid };
+	  },
 	
-	  newGame: function () {},
+	  componentDidMount: function () {
+	    document.addEventListener("keydown", this.move);
+	    this.setState({ board: this.game.grid.grid });
+	  },
+	
+	  componentWillUnmount: function () {
+	    document.removeEventListener("keydown", this.move);
+	  },
+	
+	  move: function (e) {
+	    e.preventDefault();
+	    var keyCode = KeyMap[e.keyCode];
+	    console.log(keyCode);
+	    if (keyCode) {
+	      this.game.move(keyCode, this.upDateDisplay);
+	    }
+	  },
+	
+	  upDateDisplay: function (gameObj) {
+	    ScoreActions.updateScore(gameObj.score);
+	    this.setState({ board: gameObj.board });
+	  },
+	
+	  resetGame: function (e) {
+	    e.preventDefault();
+	    this.game = new Game();
+	    this.setState({ board: this.game.grid.grid });
+	    ScoreActions.resetScore();
+	  },
 	
 	  render: function () {
+	    var board = this.state.board;
+	
 	    return React.createElement(
 	      'section',
 	      { className: 'game-holder' },
@@ -26550,9 +26601,10 @@
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'new=Game' },
+	        { onClick: this.resetGame, className: 'reset-game' },
 	        'New Game'
-	      )
+	      ),
+	      React.createElement(GameWindow, { board: board })
 	    );
 	  }
 	
@@ -26571,10 +26623,18 @@
 	
 	var Game = function () {
 	  this.grid = new Grid(4, 4);
+	  this.setUp();
 	};
 	
 	Game.prototype.setUp = function () {
 	  var startPieces = this.randomPieces(2, this.grid);
+	  for (var i = 0; i < startPieces.length; i++) {
+	    this.grid.addTile(startPieces[i]);
+	  }
+	};
+	
+	Game.prototype.addPiecesAfterMove = function () {
+	  var startPieces = this.randomPieces(this.randomNumOfPieces(), this.grid);
 	  for (var i = 0; i < startPieces.length; i++) {
 	    this.grid.addTile(startPieces[i]);
 	  }
@@ -26588,10 +26648,10 @@
 	  return this.grid.isLost();
 	};
 	
-	Game.prototype.move = function (direction) {
+	Game.prototype.move = function (direction, cb) {
 	  var score = this.grid.move(GameConstants[direction]);
-	
-	  return { grid: this.grid.grid, score: score };
+	  this.addPiecesAfterMove();
+	  cb({ score: score, board: this.grid.grid });
 	};
 	
 	Game.prototype.randomPieces = function (numPieces, grid) {
@@ -26916,6 +26976,150 @@
 	};
 	
 	module.exports = GameConstants;
+
+/***/ },
+/* 190 */
+/***/ function(module, exports) {
+
+	var KeyMap = {
+	    38: "UP", // Up
+	    39: "RIGHT", // Right
+	    40: "DOWN", // Down
+	    37: "LEFT", // Left
+	    75: "UP", // Vim up
+	    76: "RIGHT", // Vim right
+	    74: "DOWN", // Vim down
+	    72: "LEFT", // Vim left
+	    87: "UP", // W
+	    68: "RIGHT", // D
+	    83: "DOWN", // S
+	    65: "LEFT" // A
+	};
+	
+	module.exports = KeyMap;
+
+/***/ },
+/* 191 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var EmptyRows = __webpack_require__(192);
+	
+	var GameWidow = React.createClass({
+	  displayName: 'GameWidow',
+	
+	  getInitialState: function () {
+	    return { board: undefined };
+	  },
+	
+	  componentWillReceiveProps: function (newProps) {
+	    this.setState({ board: newProps.board });
+	  },
+	
+	  getRows: function () {
+	    var board = this.props.board;
+	    var that = this;
+	
+	    if (board) {
+	      var rowComponents = board.map(function (row, idx) {
+	        var tiles = that.getTiles(row);
+	        return React.createElement(
+	          'ul',
+	          { key: idx, className: 'inner' },
+	          tiles
+	        );
+	      });
+	      return React.createElement(
+	        'ul',
+	        null,
+	        rowComponents
+	      );
+	    } else {
+	      return React.createElement(EmptyRows, null);
+	    }
+	  },
+	
+	  getTiles: function (row) {
+	    return row.map(function (tile, idx) {
+	      if (tile === 0) {
+	        return React.createElement('li', { key: idx, className: 'empty group' });
+	      } else {
+	        return React.createElement(
+	          'li',
+	          { key: idx, className: tile.value },
+	          tile.value
+	        );
+	      }
+	    });
+	  },
+	
+	  render: function () {
+	    var rows = this.getRows();
+	
+	    return React.createElement(
+	      'section',
+	      { className: 'game-viewport' },
+	      rows
+	    );
+	  }
+	
+	});
+	
+	module.exports = GameWidow;
+
+/***/ },
+/* 192 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var PropTypes = React.PropTypes;
+	
+	var EmptyRows = React.createClass({
+	  displayName: "EmptyRows",
+	
+	
+	  render: function () {
+	    return React.createElement(
+	      "ul",
+	      null,
+	      React.createElement(
+	        "ul",
+	        { className: "inner" },
+	        React.createElement("li", { className: "empty group" }),
+	        React.createElement("li", { className: "empty group" }),
+	        React.createElement("li", { className: "empty group" }),
+	        React.createElement("li", { className: "empty group" })
+	      ),
+	      React.createElement(
+	        "ul",
+	        { className: "inner" },
+	        React.createElement("li", { className: "empty group" }),
+	        React.createElement("li", { className: "empty group" }),
+	        React.createElement("li", { className: "empty group" }),
+	        React.createElement("li", { className: "empty group" })
+	      ),
+	      React.createElement(
+	        "ul",
+	        { className: "inner" },
+	        React.createElement("li", { className: "empty group" }),
+	        React.createElement("li", { className: "empty group" }),
+	        React.createElement("li", { className: "empty group" }),
+	        React.createElement("li", { className: "empty group" })
+	      ),
+	      React.createElement(
+	        "ul",
+	        { className: "inner" },
+	        React.createElement("li", { className: "empty group" }),
+	        React.createElement("li", { className: "empty group" }),
+	        React.createElement("li", { className: "empty group" }),
+	        React.createElement("li", { className: "empty group" })
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = EmptyRows;
 
 /***/ }
 /******/ ]);

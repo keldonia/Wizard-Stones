@@ -25,6 +25,10 @@ ScoreStore.__onDispatch = function (payload) {
         ScoreStore.resetScores();
         ScoreStore.__emitChange();
       break;
+    case ScoreConstants.RESET_SCORE:
+        ScoreStore.resetScore();
+        ScoreStore.__emitChange();
+      break;
     default:
 
   }
@@ -35,8 +39,12 @@ ScoreStore.resetScores = function () {
   _topScore = "0";
 };
 
+ScoreStore.resetScore = function () {
+  _score = "0";
+};
+
 ScoreStore.updateScore = function (score) {
-  _score = _score + score;
+  _score = parseInt(_score) + score;
   if (_score > _topScore) {
     _topScore = _score;
   }

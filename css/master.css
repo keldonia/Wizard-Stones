@@ -1,0 +1,32 @@
+
+
+ul {
+  list-style: none;
+}
+
+.inner {
+  display: block;
+  clear: both;
+}
+
+.inner li {
+  float: left;
+  border: 1px solid black;
+  width: 16vh;
+  height: 16vh;
+}
+
+li.empty.group {
+  float: left;
+}
+
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.rules-explanation {
+  display: block;
+  clear:  both;
+}

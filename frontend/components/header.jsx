@@ -23,8 +23,8 @@ var Header = React.createClass({
 
   _onChange: function () {
     this.setState({
-      score: ScoreStore.score,
-      topScore: ScoreStore.topScore
+      score: ScoreStore.score(),
+      topScore: ScoreStore.topScore()
     });
   },
 

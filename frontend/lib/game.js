@@ -5,11 +5,19 @@ var GameConstants = require('./constants');
 
 var Game = function () {
   this.grid = new Grid(4,4);
+  this.setUp();
 
 };
 
 Game.prototype.setUp = function () {
   var startPieces = this.randomPieces(2, this.grid);
+  for (var i = 0; i < startPieces.length; i++) {
+    this.grid.addTile(startPieces[i]);
+  }
+};
+
+Game.prototype.addPiecesAfterMove = function () {
+  var startPieces = this.randomPieces(this.randomNumOfPieces(), this.grid);
   for (var i = 0; i < startPieces.length; i++) {
     this.grid.addTile(startPieces[i]);
   }
@@ -23,10 +31,10 @@ Game.prototype.isLost = function () {
   return this.grid.isLost();
 };
 
-Game.prototype.move = function (direction) {
+Game.prototype.move = function (direction, cb) {
   var score = this.grid.move(GameConstants[direction]);
-
-  return { grid: this.grid.grid, score: score } ;
+  this.addPiecesAfterMove();
+  cb({score: score, board: this.grid.grid });
 };
 
 Game.prototype.randomPieces = function (numPieces, grid) {
