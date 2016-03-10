@@ -1,7 +1,258 @@
+body {
+  font-family: 'Eagle Lake', cursive;
+  color: white
+}
 
+.scores-holder h3{
+  float: left;
+  margin: 1em;
+}
+
+.game-header, .game-info {
+  margin: auto;
+  width: 50%;
+}
+
+.reset-game {
+  float: right;
+  margin-top: 1em;  
+  margin-right: 8%;
+  font-size: 1.2em;
+}
+
+.reset-game:hover {
+  cursor: pointer;
+  color: red;
+}
+
+section.game-viewport {
+  float: left;
+  padding: 20px;
+  background-image: url('https://c2.staticflickr.com/6/5164/5290154654_4d8949fb71_z.jpg');
+  border-radius: 2em;
+  margin: 0 auto 0 0;
+  min-width: 635px;
+  box-shadow: inset 6px 4px rgba(153,153,153,0.2),
+  inset -6px -4px rgba(153,153,153,0.2),
+  inset 4px 2px rgba(153,153,153,0.1),
+  inset -4px -2px rgba(153,153,153,0.1),
+  inset 2px 1px rgba(153,153,153,0.05),
+  inset -2px -1px rgba(153,153,153,0.05),
+  0 0 1.3em 2.1em rgba(101,101,101,0.6);
+  position: relative;
+  clear: both;
+  transform: scale3d(0.65, 0.85, 0.3) translateX(73%);
+}
+
+.game-viewport .occupied {
+  z-index: 20;
+  margin: 0.3em auto;
+  width: 3em;
+  height: 2.8em;
+  transform: scale3d(0.75, 0.75, 0.3);
+  border-radius: 50%;
+  position: relative;
+  box-shadow:
+    inset 0 0 0.5em #fff,
+    inset 20px 0 0.8em #f0f,
+    inset -20px 0 0.8em #0ff,
+    inset 20px 0 3em #f0f,
+    inset -20px 0 3em #0ff,
+    0 0 50px #fff,
+    -10px 0 80px #f0f,
+    10px 0 80px #0ff;
+}
+
+.game-viewport #two {
+  box-shadow:
+    inset 0 0 0.5em #808080,
+    inset 20px 0 0.8em #ff0fff,
+    inset -20px 0 0.8em #00ebeb,
+    inset 20px 0 3em #ff0fff,
+    inset -20px 0 3em #00ebeb,
+    0 0 5px #808080,
+    -1px 0 8px #ff0fff,
+    1px 0 8px #00ebeb;
+}
+
+.game-viewport #four {
+  box-shadow:
+    inset 0 0 0.5em #878787,
+    inset 20px 0 0.8em #ff1fff,
+    inset -20px 0 0.8em #0fffff,
+    inset 20px 0 3em #ff1fff,
+    inset -20px 0 3em #0fffff,
+    0 0 10px #878787,
+    -2px 0 16px #ff1fff,
+    2px 0 16px #0fffff;
+
+}
+
+.game-viewport #eight {
+  box-shadow:
+    inset 0 0 0.5em #8f8f8f,
+    inset 20px 0 0.8em #f3f,
+    inset -20px 0 0.8em #24ffff,
+    inset 20px 0 3em #f3f,
+    inset -20px 0 3em #24ffff,
+    0 0 15px #8f8f8f,
+    -3px 0 24px #f3f,
+    3px 0 24px #24ffff;
+}
+
+.game-viewport #sixteen {
+  box-shadow:
+    inset 0 0 0.5em #999,
+    inset 20px 0 0.8em #ff42ff,
+    inset -20px 0 0.8em #3ff,
+    inset 20px 0 3em #ff42ff,
+    inset -20px 0 3em #3ff,
+    0 0 20px #999,
+    -4px 0 32px #ff42ff,
+    4px 0 32px #3ff;
+}
+
+.game-viewport #thirty-two {
+  box-shadow:
+    inset 0 0 0.5em #a1a1a1,
+    inset 20px 0 0.8em #ff52ff,
+    inset -20px 0 0.8em #47ffff,
+    inset 20px 0 3em #ff52ff,
+    inset -20px 0 3em #47ffff,
+    0 0 25px #a1a1a1,
+    -5px 0 40px #ff52ff,
+    5px 0 40px #47ffff;
+}
+
+.game-viewport #sixty-four {
+  box-shadow:
+    inset 0 0 0.5em #a8a8a8,
+    inset 20px 0 0.8em #ff61ff,
+    inset -20px 0 0.8em #5cffff,
+    inset 20px 0 3em #ff61ff,
+    inset -20px 0 3em #5cffff,
+    0 0 30px #a8a8a8,
+    -6px 0 48px #ff61ff,
+    6px 0 48px #5cffff;
+}
+
+.game-viewport #one-hundred {
+  box-shadow:
+    inset 0 0 0.5em #b0b0b0,
+    inset 20px 0 0.8em #ff70ff,
+    inset -20px 0 0.8em #66ffff,
+    inset 20px 0 3em #ff70ff,
+    inset -20px 0 3em #66ffff,
+    0 0 35px #b0b0b0,
+    -7px 0 56px #ff70ff,
+    7px 0 56px #66ffff;
+}
+
+.game-viewport #two-hundred {
+  box-shadow:
+    inset 0 0 0.5em #b8b8b8,
+    inset 20px 0 0.8em #ff90ff,
+    inset -20px 0 0.8em #75ffff,
+    inset 20px 0 3em #ff90ff,
+    inset -20px 0 3em #75ffff,
+    0 0 40px #b8b8b8,
+    -8px 0 64px #ff90ff,
+    8px 0 64px #75ffff;
+}
+
+.game-viewport #two-hundred {
+  box-shadow:
+    inset 0 0 0.5em #bfbfbf,
+    inset 20px 0 0.8em #ff8fff,
+    inset -20px 0 0.8em #85ffff,
+    inset 20px 0 3em #ff8fff,
+    inset -20px 0 3em #85ffff,
+    0 0 45px #bfbfbf,
+    -9px 0 72px #ff8fff,
+    9px 0 72px #85ffff;
+}
+
+.game-viewport #five-hundred {
+  box-shadow:
+    inset 0 0 0.5em #c7c7c7,
+    inset 20px 0 0.8em #ff99ff,
+    inset -20px 0 0.8em #94ffff,
+    inset 20px 0 3em #ff99ff,
+    inset -20px 0 3em #94ffff,
+    0 0 50px #c7c7c7,
+    -10px 0 80px #ff99ff,
+    10px 0 80px #94ffff;
+}
+
+.game-viewport #one-thousand {
+  box-shadow:
+    inset 0 0 0.5em #cfcfcf,
+    inset 20px 0 0.8em #ffa8ff,
+    inset -20px 0 0.8em #a3ffff,
+    inset 20px 0 3em #ffa8ff,
+    inset -20px 0 3em #a3ffff,
+    0 0 55px #cfcfcf,
+    -11px 0 88px #ffa8ff,
+    11px 0 88px #a3ffff;
+}
+
+.game-viewport #two-thousand {
+  box-shadow:
+    inset 0 0 0.5em #d9d9d9,
+    inset 20px 0 0.8em #ffb8ff,
+    inset -20px 0 0.8em #b3ffff,
+    inset 20px 0 3em #ffb8ff,
+    inset -20px 0 3em #b3ffff,
+    0 0 60px #d9d9d9,
+    -12px 0 96px #ffb8ff,
+    12px 0 96px #b3ffff;
+}
+
+.game-viewport #four-thousand {
+  box-shadow:
+    inset 0 0 0.5em #d9d9d9,
+    inset 20px 0 0.8em #ffb8ff,
+    inset -20px 0 0.8em #b3ffff,
+    inset 20px 0 3em #ffb8ff,
+    inset -20px 0 3em #b3ffff,
+    0 0 65px #d9d9d9,
+    -13px 0 104px #ffb8ff,
+    13px 0 104px #b3ffff;
+}
+
+.game-viewport #eight-thousand {
+  box-shadow:
+    inset 0 0 0.5em #d9d9d9,
+    inset 20px 0 0.8em #ffb8ff,
+    inset -20px 0 0.8em #b3ffff,
+    inset 20px 0 3em #ffb8ff,
+    inset -20px 0 3em #b3ffff,
+    0 0 70px #d9d9d9,
+    -14px 0 112px #ffb8ff,
+    14px 0 112px #b3ffff;
+}
+
+.game-viewport #sixteen-thousand {
+  box-shadow:
+    inset 0 0 0.5em #d9d9d9,
+    inset 20px 0 0.8em #ffb8ff,
+    inset -20px 0 0.8em #b3ffff,
+    inset 20px 0 3em #ffb8ff,
+    inset -20px 0 3em #b3ffff,
+    0 0 75px #d9d9d9,
+    -15px 0 120px #ffb8ff,
+    15px 0 120px #b3ffff;
+}
+
+.power-holder {
+    position: relative;
+    top: 0.6em;
+}
 
 ul {
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .inner {
@@ -11,9 +262,21 @@ ul {
 
 .inner li {
   float: left;
-  border: 1px solid black;
-  width: 16vh;
-  height: 16vh;
+  border: 1px inset black;
+  width: 3.5em;
+  height: 3.5em;
+  margin: 8px;
+  border-radius: 12px;
+  font-size: 2.5em;
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: inset 6em 1.8em rgba(102,102,102,0.1),
+  inset -6em -1.8em rgba(102,102,102,0.1),
+  inset 0.4em 0.2em rgba(77,77,77,0.1),
+  inset 0.2em 0.1em rgba(51,51,51,0.05),
+  inset 0.1em 0.05em rgba(26,26,26,0.025),
+  inset 0.05em 0.025em rgba(0,0,0,0.0125);
 }
 
 li.empty.group {

@@ -33,17 +33,18 @@ var Header = React.createClass({
     var topScore = this.state.topScore;
 
     return (
-      <header>
-        <h1 className="game-name">2048</h1>
+      <header className="game-header">
+        <h1 className="game-name">Wizard Stones</h1>
         <section className="scores-holder">
           <div className="current-score">
-            <h3 className="score-type">Current Score</h3>
+            <h3 className="score-type">Current Score:</h3>
             <h3 className="score">{score}</h3>
           </div>
           <div className="player-top-score">
-            <h3 className="score-type">Your Top Score</h3>
+            <h3 className="score-type">Your Top Score:</h3>
             <h3 className="score">{topScore}</h3>
           </div>
+          <div className="group"></div>
         </section>
       </header>
     );

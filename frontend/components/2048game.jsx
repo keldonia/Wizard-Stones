@@ -1,6 +1,5 @@
 var React = require('react');
 var Header = require('./header');
-var Explanation = require('./explanation');
 var GameHolder = require('./game_holder');
 
 var GameSplash = React.createClass({
@@ -10,7 +9,6 @@ var GameSplash = React.createClass({
       <div>
         <Header />
         <GameHolder />
-        <Explanation />
       </div>
     );
   }

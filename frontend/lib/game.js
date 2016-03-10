@@ -72,7 +72,7 @@ Game.prototype.randomPieceValue = function () {
 };
 
 Game.prototype.randomNumOfPieces = function () {
-  return Math.random() < 0.8 ? 1 : 2;
+  return Math.random() < 0.9 ? 1 : 2;
 };
 
 module.exports = Game;

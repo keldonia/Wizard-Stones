@@ -30,6 +30,7 @@ var EmptyRows = React.createClass({
           <li><div className="empty group"></div></li>
           <li><div className="empty group"></div></li>
         </ul>
+        <div className="group"></div>
       </ul>
     );
   }

@@ -3,8 +3,7 @@ var React = require('react');
 var KeyMap = require('../constants/key_mapping');
 var ScoreActions = require('../actions/score_actions');
 var GameWindow = require('./game_window');
-
-
+var Explanation = require('./explanation');
 
 var GameHolder = React.createClass({
   getInitialState: function () {
@@ -56,12 +55,18 @@ var GameHolder = React.createClass({
   render: function() {
     var board = this.state.board;
 
-
     return (
       <section className="game-holder">
-        <p className="invite">Join the numbers and get to the <b>2048 tile!</b></p>
-        <div onClick={this.resetGame} className="reset-game">New Game</div>
-        <GameWindow board={board} />
+        <div className="game-info">
+          <p className="invite">Join the mana stones and build up to the <b>2048 mana stone!</b></p>
+          <Explanation />
+          <div className="group"></div>
+          <div onClick={this.resetGame} className="reset-game">New Game</div>
+        </div>
+        <div className="window">
+          <GameWindow board={board} />
+        </div>
+        <div className="group"></div>
       </section>
     );
   }

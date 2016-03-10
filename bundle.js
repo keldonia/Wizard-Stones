@@ -19647,7 +19647,6 @@
 
 	var React = __webpack_require__(1);
 	var Header = __webpack_require__(160);
-	var Explanation = __webpack_require__(183);
 	var GameHolder = __webpack_require__(184);
 	
 	var GameSplash = React.createClass({
@@ -19659,8 +19658,7 @@
 	      'div',
 	      null,
 	      React.createElement(Header, null),
-	      React.createElement(GameHolder, null),
-	      React.createElement(Explanation, null)
+	      React.createElement(GameHolder, null)
 	    );
 	  }
 	
@@ -19710,11 +19708,11 @@
 	
 	    return React.createElement(
 	      'header',
-	      null,
+	      { className: 'game-header' },
 	      React.createElement(
 	        'h1',
 	        { className: 'game-name' },
-	        '2048'
+	        'Wizard Stones'
 	      ),
 	      React.createElement(
 	        'section',
@@ -19725,7 +19723,7 @@
 	          React.createElement(
 	            'h3',
 	            { className: 'score-type' },
-	            'Current Score'
+	            'Current Score:'
 	          ),
 	          React.createElement(
 	            'h3',
@@ -19739,14 +19737,15 @@
 	          React.createElement(
 	            'h3',
 	            { className: 'score-type' },
-	            'Your Top Score'
+	            'Your Top Score:'
 	          ),
 	          React.createElement(
 	            'h3',
 	            { className: 'score' },
 	            topScore
 	          )
-	        )
+	        ),
+	        React.createElement('div', { className: 'group' })
 	      )
 	    );
 	  }
@@ -26527,7 +26526,7 @@
 	        null,
 	        "How to play:"
 	      ),
-	      " use the arrow keys to move tiles.  When two tiles touch they merge!"
+	      " Use the arrow keys to move mana stones.  When two mana stones of the same value would occupy the same space they merge!"
 	    );
 	  }
 	
@@ -26544,6 +26543,7 @@
 	var KeyMap = __webpack_require__(190);
 	var ScoreActions = __webpack_require__(182);
 	var GameWindow = __webpack_require__(191);
+	var Explanation = __webpack_require__(183);
 	
 	var GameHolder = React.createClass({
 	  displayName: 'GameHolder',
@@ -26601,21 +26601,32 @@
 	      'section',
 	      { className: 'game-holder' },
 	      React.createElement(
-	        'p',
-	        { className: 'invite' },
-	        'Join the numbers and get to the ',
+	        'div',
+	        { className: 'game-info' },
 	        React.createElement(
-	          'b',
-	          null,
-	          '2048 tile!'
+	          'p',
+	          { className: 'invite' },
+	          'Join the mana stones and build up to the ',
+	          React.createElement(
+	            'b',
+	            null,
+	            '2048 mana stone!'
+	          )
+	        ),
+	        React.createElement(Explanation, null),
+	        React.createElement('div', { className: 'group' }),
+	        React.createElement(
+	          'div',
+	          { onClick: this.resetGame, className: 'reset-game' },
+	          'New Game'
 	        )
 	      ),
 	      React.createElement(
 	        'div',
-	        { onClick: this.resetGame, className: 'reset-game' },
-	        'New Game'
+	        { className: 'window' },
+	        React.createElement(GameWindow, { board: board })
 	      ),
-	      React.createElement(GameWindow, { board: board })
+	      React.createElement('div', { className: 'group' })
 	    );
 	  }
 	
@@ -26700,7 +26711,7 @@
 	};
 	
 	Game.prototype.randomNumOfPieces = function () {
-	  return Math.random() < 0.8 ? 1 : 2;
+	  return Math.random() < 0.9 ? 1 : 2;
 	};
 	
 	module.exports = Game;
@@ -27050,6 +27061,7 @@
 
 	var React = __webpack_require__(1);
 	var EmptyRows = __webpack_require__(192);
+	var ValueConstants = __webpack_require__(193);
 	
 	var GameWidow = React.createClass({
 	  displayName: 'GameWidow',
@@ -27078,7 +27090,8 @@
 	      return React.createElement(
 	        'ul',
 	        null,
-	        rowComponents
+	        rowComponents,
+	        React.createElement('div', { className: 'group' })
 	      );
 	    } else {
 	      return React.createElement(EmptyRows, null);
@@ -27099,8 +27112,12 @@
 	          { key: idx },
 	          React.createElement(
 	            'div',
-	            { className: tile.value },
-	            tile.value
+	            { className: 'occupied', id: ValueConstants[tile.value] },
+	            React.createElement(
+	              'div',
+	              { className: 'power-holder' },
+	              tile.value
+	            )
 	          )
 	        );
 	      }
@@ -27231,13 +27248,37 @@
 	          null,
 	          React.createElement("div", { className: "empty group" })
 	        )
-	      )
+	      ),
+	      React.createElement("div", { className: "group" })
 	    );
 	  }
 	
 	});
 	
 	module.exports = EmptyRows;
+
+/***/ },
+/* 193 */
+/***/ function(module, exports) {
+
+	var VALUE_ENGLISH = {
+	  2: "two",
+	  4: "four",
+	  8: "eight",
+	  16: "sixteen",
+	  32: "thirty-two",
+	  64: "sixty-four",
+	  128: "one-hundred",
+	  256: "two-hundred",
+	  512: "five-hundred",
+	  1024: "one-thousand",
+	  2048: "two-thousand",
+	  4096: "four-thousand",
+	  8192: "eight-thousand",
+	  16384: "sixteen-thousand"
+	};
+	
+	module.exports = VALUE_ENGLISH;
 
 /***/ }
 /******/ ]);

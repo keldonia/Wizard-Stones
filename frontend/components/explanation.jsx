@@ -6,7 +6,7 @@ var Explanation = React.createClass({
   render: function() {
     return (
       <article className="rules-explanation">
-        <b>How to play:</b> use the arrow keys to move tiles.  When two tiles touch they merge!
+        <b>How to play:</b> Use the arrow keys to move mana stones.  When two mana stones of the same value would occupy the same space they merge!
       </article>
     );
   }

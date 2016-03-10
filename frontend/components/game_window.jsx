@@ -1,5 +1,6 @@
 var React = require('react');
 var EmptyRows = require('./empty_rows');
+var ValueConstants = require('../constants/value_english');
 
 var GameWidow = React.createClass({
   getInitialState: function () {
@@ -26,6 +27,7 @@ var GameWidow = React.createClass({
       return (
         <ul>
           {rowComponents}
+          <div className="group"></div>
         </ul>
       ) ;
     } else {
@@ -38,7 +40,7 @@ var GameWidow = React.createClass({
       if (tile === 0) {
         return <li key={idx}><div className="empty group"></div></li>
       } else {
-        return <li key={idx}><div className={tile.value}>{tile.value}</div></li>
+        return <li key={idx}><div className="occupied" id={ValueConstants[tile.value]}><div className="power-holder">{tile.value}</div></div></li>
       }
     })
   },
