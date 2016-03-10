@@ -66,7 +66,7 @@ Grid.prototype.isWon = function () {
 
 Grid.prototype.isLost = function () {
   if (this.full()) {
-    if (this.posDirections.includes(false)) {
+    if (this.posDirections().includes(true)) {
       return false;
     } else {
       return true;
@@ -77,8 +77,9 @@ Grid.prototype.isLost = function () {
 };
 
 Grid.prototype.posDirections = function () {
-  var posDirections = GameConstants.map( function(direction) {
-    return this.testDirection(direction);
+  var directions = Object.keys(GameConstants)
+  var posDirections = directions.map( function(direction) {
+    return this.testDirection(GameConstants[direction]);
   }, this);
 
   return posDirections;
@@ -158,7 +159,7 @@ Grid.prototype.values = function () {
 };
 
 Grid.prototype.full = function () {
-  if (this.positionsAvailable().length < 1) {
+  if (this.positionsAvailable()) {
     return true;
   } else {
     return false;

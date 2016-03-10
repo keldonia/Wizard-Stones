@@ -33,12 +33,14 @@ Game.prototype.isLost = function () {
 
 Game.prototype.move = function (direction, cb) {
   var score = this.grid.move(GameConstants[direction]);
+  var won = this.isWon();
+  var lost = this.isLost();
   this.addPiecesAfterMove();
   cb({
     score: score,
     board: this.grid.grid,
-    won: this.isWon,
-    lost: this.isLost
+    won: won,
+    lost: lost
   });
 };
 
