@@ -244,6 +244,24 @@ section.game-viewport {
     15px 0 120px #b3ffff;
 }
 
+.occupied-appear {
+  opacity: 0.01;
+}
+
+.occupied-appear.occupied-appear-active {
+  opacity: 1;
+  transition: opacity .1s ease-in;
+}
+
+.occupied-leave {
+  opacity: 1;
+}
+
+.occupied-leave.occupied-leave-active {
+  opacity: 0.01;
+  transition: opacity 100ms ease-in;
+}
+
 .power-holder {
     position: relative;
     top: 0.6em;

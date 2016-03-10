@@ -1,6 +1,7 @@
 var React = require('react');
 var EmptyRows = require('./empty_rows');
 var ValueConstants = require('../constants/value_english');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 var GameWidow = React.createClass({
   getInitialState: function () {
@@ -37,10 +38,21 @@ var GameWidow = React.createClass({
 
   getTiles: function (row) {
     return row.map( function(tile, idx) {
+      var keys = [1,2,3].map( function(n) { return n * idx })
       if (tile === 0) {
-        return <li key={idx}><div className="empty group"></div></li>
+        return <li key={keys[0]}><div className="empty group"></div></li>
       } else {
-        return <li key={idx}><div className="occupied" id={ValueConstants[tile.value]}><div className="power-holder">{tile.value}</div></div></li>
+        return (
+          <ReactCSSTransitionGroup transitionName="occupied" transitionAppear={true}  transitionEnterTimeout={100} transitionAppearTimeout={100} transitionLeaveTimeout={100}>
+            <li key={tile}>
+              <div className="occupied" id={ValueConstants[tile.value]}>
+                <div className="power-holder">
+                  {tile.value}
+                </div>
+              </div>
+            </li>
+          </ReactCSSTransitionGroup>
+        );
       }
     })
   },

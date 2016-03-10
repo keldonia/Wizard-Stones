@@ -53,7 +53,6 @@ var GameHolder = React.createClass({
   },
 
   lostGame: function () {
-    console.log(this.state.lost);
     return (
       <Modal
           isOpen={this.state.lost}
@@ -123,22 +122,22 @@ var GameHolder = React.createClass({
 module.exports = GameHolder;
 
 const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)',
+  overlay : {
+    position          : 'fixed',
+    top               : 0,
+    left              : 0,
+    right             : 0,
+    bottom            : 0,
+    backgroundColor   : 'rgba(77, 77, 77, 0.75)'
   },
   content : {
-    border                     : '1px solid #333',
-    background                 : 'rgba(77,77,77,0.7)',
+    background                 : 'url(http://img06.deviantart.net/eeea/i/2013/006/9/a/typhoon_wizard_by_jsfantasy-d5qlr0p.png) repeat-none center center',
+    border                     : 'none',
     overflow                   : 'auto',
     WebkitOverflowScrolling    : 'touch',
     borderRadius               : '4px',
     outline                    : 'none',
-    padding                    : '20px',
+    padding                    : '80px',
     color                      : 'white',
     font                       : "'Eagle Lake', cursive"
   }
