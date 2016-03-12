@@ -11,10 +11,10 @@ var Tile = React.createClass({
   },
 
   render: function() {
-    tile = this.props.tile
+    var tile = this.props.tile
 
     return (
-      <li key={tile}>
+      <li key={this.props.key}>
         <div className="occupied" id={ValueConstants[tile.value]}>
           <div className="power-holder">
             {tile.value}

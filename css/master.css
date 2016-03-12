@@ -25,13 +25,18 @@ body {
   color: red;
 }
 
+.window {
+  margin: 4em auto;
+  clear: both;
+  height: 800px;
+}
+
 section.game-viewport {
   float: left;
-  padding: 20px;
+  padding: 1.5vw;
   background-image: url('https://c2.staticflickr.com/6/5164/5290154654_4d8949fb71_z.jpg');
   border-radius: 2em;
-  margin: 0 auto 0 0;
-  min-width: 635px;
+  min-width: 48vw;
   box-shadow: inset 6px 4px rgba(153,153,153,0.2),
   inset -6px -4px rgba(153,153,153,0.2),
   inset 4px 2px rgba(153,153,153,0.1),
@@ -40,16 +45,18 @@ section.game-viewport {
   inset -2px -1px rgba(153,153,153,0.05),
   0 0 1.3em 2.1em rgba(101,101,101,0.6);
   position: relative;
+  margin: 2em 25vw;
   clear: both;
-  transform: scale3d(0.65, 0.85, 0.3) translateX(73%);
+}
+.game-viewport ul {
+  margin: auto;
 }
 
 .game-viewport .occupied {
   z-index: 20;
-  margin: 0.3em auto;
-  width: 3em;
-  height: 2.8em;
-  transform: scale3d(0.75, 0.75, 0.3);
+  margin: 1.5vw auto;
+  width: 8vw;
+  height: 10vw;
   border-radius: 50%;
   position: relative;
   box-shadow:
@@ -264,7 +271,7 @@ section.game-viewport {
 
 .power-holder {
     position: relative;
-    top: 0.6em;
+    top: 2.5vw;
 }
 
 ul {
@@ -281,11 +288,13 @@ ul {
 .inner li {
   float: left;
   border: 1px inset black;
-  width: 3.5em;
-  height: 3.5em;
-  margin: 8px;
+  width: 10vw;
+  min-width: 1em;
+  height: 13vw;
+  min-height: 1em;
+  margin: 0.75vw;
   border-radius: 12px;
-  font-size: 2.5em;
+  font-size: 3vw;
   color: white;
   font-weight: 700;
   text-align: center;
