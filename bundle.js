@@ -26637,8 +26637,13 @@
 	var KeyMap = __webpack_require__(191);
 	var ScoreActions = __webpack_require__(184);
 	var GameWindow = __webpack_require__(192);
+<<<<<<< HEAD
+	var Explanation = __webpack_require__(203);
+	var Modal = __webpack_require__(204);
+=======
 	var Explanation = __webpack_require__(202);
 	var Modal = __webpack_require__(203);
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 	
 	var GameHolder = React.createClass({
 	  displayName: 'GameHolder',
@@ -26895,7 +26900,11 @@
 	};
 	
 	Game.prototype.randomNumOfPieces = function () {
+<<<<<<< HEAD
+	  return Math.random() < 0.95 ? 1 : 2;
+=======
 	  return Math.random() < 0.9 ? 1 : 2;
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 	};
 	
 	module.exports = Game;
@@ -27248,6 +27257,10 @@
 	var EmptyRows = __webpack_require__(193);
 	var ValueConstants = __webpack_require__(194);
 	var ReactCSSTransitionGroup = __webpack_require__(195);
+<<<<<<< HEAD
+	var Tile = __webpack_require__(202);
+=======
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 	
 	var GameWidow = React.createClass({
 	  displayName: 'GameWidow',
@@ -27299,6 +27312,9 @@
 	        return React.createElement(
 	          ReactCSSTransitionGroup,
 	          { transitionName: 'occupied', transitionAppear: true, transitionEnterTimeout: 100, transitionAppearTimeout: 100, transitionLeaveTimeout: 100 },
+<<<<<<< HEAD
+	          React.createElement(Tile, { key: idx, tile: tile })
+=======
 	          React.createElement(
 	            'li',
 	            { key: tile },
@@ -27312,6 +27328,7 @@
 	              )
 	            )
 	          )
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 	        );
 	      }
 	    });
@@ -28272,6 +28289,49 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+<<<<<<< HEAD
+	var ValueConstants = __webpack_require__(194);
+	
+	var Tile = React.createClass({
+	  displayName: 'Tile',
+	
+	  getInitialState: function () {
+	    return { tile: undefined };
+	  },
+	
+	  componentWillReceiveProps: function (newProps) {
+	    this.setState({ tile: newProps.tile });
+	  },
+	
+	  render: function () {
+	    tile = this.props.tile;
+	
+	    return React.createElement(
+	      'li',
+	      { key: tile },
+	      React.createElement(
+	        'div',
+	        { className: 'occupied', id: ValueConstants[tile.value] },
+	        React.createElement(
+	          'div',
+	          { className: 'power-holder' },
+	          tile.value
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = Tile;
+
+/***/ },
+/* 203 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+=======
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 	var PropTypes = React.PropTypes;
 	
 	var Explanation = React.createClass({
@@ -28296,23 +28356,41 @@
 	module.exports = Explanation;
 
 /***/ },
+<<<<<<< HEAD
+/* 204 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(205);
+=======
 /* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(204);
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 	
 
 
 /***/ },
+<<<<<<< HEAD
+/* 205 */
+=======
 /* 204 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
+<<<<<<< HEAD
+	var ExecutionEnvironment = __webpack_require__(206);
+	var ModalPortal = React.createFactory(__webpack_require__(207));
+	var ariaAppHider = __webpack_require__(222);
+	var elementClass = __webpack_require__(223);
+=======
 	var ExecutionEnvironment = __webpack_require__(205);
 	var ModalPortal = React.createFactory(__webpack_require__(206));
 	var ariaAppHider = __webpack_require__(221);
 	var elementClass = __webpack_require__(222);
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 	var renderSubtreeIntoContainer = __webpack_require__(158).unstable_renderSubtreeIntoContainer;
 	
 	var SafeHTMLElement = ExecutionEnvironment.canUseDOM ? window.HTMLElement : {};
@@ -28391,7 +28469,11 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
+<<<<<<< HEAD
+/* 206 */
+=======
 /* 205 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -28436,14 +28518,24 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 207 */
+=======
 /* 206 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var div = React.DOM.div;
+<<<<<<< HEAD
+	var focusManager = __webpack_require__(208);
+	var scopeTab = __webpack_require__(210);
+	var Assign = __webpack_require__(211);
+=======
 	var focusManager = __webpack_require__(207);
 	var scopeTab = __webpack_require__(209);
 	var Assign = __webpack_require__(210);
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 	
 	
 	// so that our CSS is statically analyzable
@@ -28640,10 +28732,17 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 208 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var findTabbable = __webpack_require__(209);
+=======
 /* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var findTabbable = __webpack_require__(208);
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 	var modalElement = null;
 	var focusLaterElement = null;
 	var needToFocus = false;
@@ -28714,7 +28813,11 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 209 */
+=======
 /* 208 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports) {
 
 	/*!
@@ -28770,10 +28873,17 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 210 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var findTabbable = __webpack_require__(209);
+=======
 /* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var findTabbable = __webpack_require__(208);
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 	
 	module.exports = function(node, event) {
 	  var tabbable = findTabbable(node);
@@ -28791,7 +28901,11 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 211 */
+=======
 /* 210 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28802,9 +28916,15 @@
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
+<<<<<<< HEAD
+	var baseAssign = __webpack_require__(212),
+	    createAssigner = __webpack_require__(218),
+	    keys = __webpack_require__(214);
+=======
 	var baseAssign = __webpack_require__(211),
 	    createAssigner = __webpack_require__(217),
 	    keys = __webpack_require__(213);
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 	
 	/**
 	 * A specialized version of `_.assign` for customizing assigned values without
@@ -28877,7 +28997,11 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 212 */
+=======
 /* 211 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28888,8 +29012,13 @@
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
+<<<<<<< HEAD
+	var baseCopy = __webpack_require__(213),
+	    keys = __webpack_require__(214);
+=======
 	var baseCopy = __webpack_require__(212),
 	    keys = __webpack_require__(213);
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 	
 	/**
 	 * The base implementation of `_.assign` without support for argument juggling,
@@ -28910,7 +29039,11 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 213 */
+=======
 /* 212 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports) {
 
 	/**
@@ -28948,7 +29081,11 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 214 */
+=======
 /* 213 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28959,9 +29096,15 @@
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
+<<<<<<< HEAD
+	var getNative = __webpack_require__(215),
+	    isArguments = __webpack_require__(216),
+	    isArray = __webpack_require__(217);
+=======
 	var getNative = __webpack_require__(214),
 	    isArguments = __webpack_require__(215),
 	    isArray = __webpack_require__(216);
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 	
 	/** Used to detect unsigned integer values. */
 	var reIsUint = /^\d+$/;
@@ -29190,7 +29333,11 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 215 */
+=======
 /* 214 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports) {
 
 	/**
@@ -29333,7 +29480,11 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 216 */
+=======
 /* 215 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports) {
 
 	/**
@@ -29582,7 +29733,11 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 217 */
+=======
 /* 216 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports) {
 
 	/**
@@ -29768,7 +29923,11 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 218 */
+=======
 /* 217 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29779,9 +29938,15 @@
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
+<<<<<<< HEAD
+	var bindCallback = __webpack_require__(219),
+	    isIterateeCall = __webpack_require__(220),
+	    restParam = __webpack_require__(221);
+=======
 	var bindCallback = __webpack_require__(218),
 	    isIterateeCall = __webpack_require__(219),
 	    restParam = __webpack_require__(220);
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 	
 	/**
 	 * Creates a function that assigns properties of source object(s) to a given
@@ -29826,7 +29991,11 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 219 */
+=======
 /* 218 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports) {
 
 	/**
@@ -29897,7 +30066,11 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 220 */
+=======
 /* 219 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports) {
 
 	/**
@@ -30035,7 +30208,11 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 221 */
+=======
 /* 220 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports) {
 
 	/**
@@ -30108,7 +30285,11 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 222 */
+=======
 /* 221 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports) {
 
 	var _element = typeof document !== 'undefined' ? document.body : null;
@@ -30155,7 +30336,11 @@
 
 
 /***/ },
+<<<<<<< HEAD
+/* 223 */
+=======
 /* 222 */
+>>>>>>> 8470d3bb3bbd402034b4ab195975b846d40137a4
 /***/ function(module, exports) {
 
 	module.exports = function(opts) {
