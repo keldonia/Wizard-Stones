@@ -10,4 +10,16 @@ Wizard Stones is a JavaScript web game, built on React-Flux, inspired by the web
   * Stores for holding both the current score and a session high score.
   * Directly manipulates the DOM to update the display of the current game state.
 * Complex Matrix Logic to transform the matrix for vertical moves and to properly combine mana stones.
-* Object-Oriented design of display 
+* Object-Oriented design of display and game logic
+* Multiple user input captures allowing input via direction keys, WASD, and vim controls
+
+
+## Languages, Frameworks, Libraries, Etc.
+
+* React
+* Flux
+* JavaScript
+
+## Screenshots
+
+Coming Soon
