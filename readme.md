@@ -22,4 +22,8 @@ Wizard Stones is a JavaScript web game, built on React-Flux, inspired by the web
 
 ## Screenshots
 
-Coming Soon 
+Opening:
+![Opening](./screenshots/game_start.png)
+
+First Move:
+![First Move](./screenshots/first_move_down.png)

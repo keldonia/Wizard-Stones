@@ -26930,12 +26930,13 @@
 	    for (var i = 0; i < length - 1; i++) {
 	      if (moveRow[i] !== 0) {
 	        var abort = false;
+	
 	        for (var k = i + 1; k < length && !abort; k++) {
 	          if (moveRow[i] !== 0 && moveRow[k] !== 0 && moveRow[i].value === moveRow[k].value) {
+	
 	            newCompositeRow.push(moveRow[i]);
 	            var upgradedTile = newCompositeRow[newCompositeRow.length - 1];
 	            upgradedTile.value = moveRow[i].value * 2;
-	            // upgradedTile.combinedTile({ x: moveRow[k].x, y: moveRow[k].y } );
 	            score += moveRow[i].value;
 	            moveRow[i] = 0;
 	            moveRow[k] = 0;
