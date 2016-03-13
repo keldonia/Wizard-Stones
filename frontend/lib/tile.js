@@ -1,4 +1,5 @@
 function Tile(tileObj) {
+  this.id               = Date.now();
   this.x                = tileObj.pos.x;
   this.y                = tileObj.pos.y;
   this.value            = tileObj.value;

@@ -26714,11 +26714,6 @@
 	        'button',
 	        { onClick: this.resetGame },
 	        'Start a new game!'
-	      ),
-	      React.createElement(
-	        'button',
-	        { onClick: this.closeModal },
-	        'Look at the board again'
 	      )
 	    );
 	  },
@@ -27175,6 +27170,7 @@
 /***/ function(module, exports) {
 
 	function Tile(tileObj) {
+	  this.id = Date.now();
 	  this.x = tileObj.pos.x;
 	  this.y = tileObj.pos.y;
 	  this.value = tileObj.value;
@@ -27300,8 +27296,20 @@
 	      } else {
 	        return React.createElement(
 	          ReactCSSTransitionGroup,
-	          { transitionName: 'occupied', transitionAppear: true, transitionEnterTimeout: 100, transitionAppearTimeout: 100, transitionLeaveTimeout: 100 },
-	          React.createElement(Tile, { key: idx, tile: tile })
+	          { transitionName: 'occupied', transitionAppear: true, transitionEnterTimeout: 100, transitionAppearTimeout: 200, transitionLeaveTimeout: 200 },
+	          React.createElement(
+	            'li',
+	            { key: idx },
+	            React.createElement(
+	              'div',
+	              { className: 'occupied', id: ValueConstants[tile.value] },
+	              React.createElement(
+	                'div',
+	                { className: 'power-holder' },
+	                tile.value
+	              )
+	            )
+	          )
 	        );
 	      }
 	    });
