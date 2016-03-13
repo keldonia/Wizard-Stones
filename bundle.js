@@ -27296,7 +27296,7 @@
 	      } else {
 	        return React.createElement(
 	          ReactCSSTransitionGroup,
-	          { transitionName: 'occupied', transitionAppear: true, transitionEnterTimeout: 100, transitionAppearTimeout: 100, transitionLeaveTimeout: 0 },
+	          { transitionName: 'occupied', transitionAppear: true, transitionEnterTimeout: 100, transitionAppearTimeout: 200, transitionLeaveTimeout: 200 },
 	          React.createElement(
 	            'li',
 	            { key: idx },

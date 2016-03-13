@@ -44,7 +44,7 @@ var GameWidow = React.createClass({
         return <li key={keys[0]}><div className="empty group"></div></li>
       } else {
         return (
-          <ReactCSSTransitionGroup transitionName="occupied" transitionAppear={true}  transitionEnterTimeout={100} transitionAppearTimeout={100} transitionLeaveTimeout={0}>
+          <ReactCSSTransitionGroup transitionName="occupied" transitionAppear={true}  transitionEnterTimeout={100} transitionAppearTimeout={200} transitionLeaveTimeout={200}>
             <li key={idx}>
               <div className="occupied" id={ValueConstants[tile.value]}>
                 <div className="power-holder">

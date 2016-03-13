@@ -257,7 +257,7 @@ section.game-viewport {
 
 .occupied-appear.occupied-appear-active {
   opacity: 1;
-  transition: opacity .1s ease-in;
+  transition: opacity .2s ease-in;
 }
 
 .occupied-leave {
@@ -266,7 +266,7 @@ section.game-viewport {
 
 .occupied-leave.occupied-leave-active {
   opacity: 0.01;
-  transition: opacity 100ms ease-in;
+  transition: opacity 200ms ease-in;
 }
 
 .power-holder {
