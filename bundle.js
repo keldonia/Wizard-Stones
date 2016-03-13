@@ -26714,11 +26714,6 @@
 	        'button',
 	        { onClick: this.resetGame },
 	        'Start a new game!'
-	      ),
-	      React.createElement(
-	        'button',
-	        { onClick: this.closeModal },
-	        'Look at the board again'
 	      )
 	    );
 	  },

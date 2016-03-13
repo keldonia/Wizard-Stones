@@ -61,7 +61,6 @@ var GameHolder = React.createClass({
 
           <h2>You need more training</h2>
           <button onClick={this.resetGame}>Start a new game!</button>
-          <button onClick={this.closeModal}>Look at the board again</button>
 
         </Modal>
     );
