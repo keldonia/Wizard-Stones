@@ -5,9 +5,9 @@ var Footer = React.createClass({
 
   render: function() {
     return (
-      <div>
-        <p>A game by <a href="http://www.brianjosephlambert.com">Brian Lambert</a>.</p>
-        <p>See the <a href="https://github.com/keldonia/Wizard-Stones">github repo</a></p>
+      <div className="footer">
+        <p><a href="http://www.brianjosephlambert.com">A game by Brian Lambert</a></p>
+        <p><a href="https://github.com/keldonia/Wizard-Stones">See the github repo</a></p>
       </div>
     );
   }

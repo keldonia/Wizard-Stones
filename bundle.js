@@ -30273,26 +30273,23 @@
 	  render: function () {
 	    return React.createElement(
 	      "div",
-	      null,
+	      { className: "footer" },
 	      React.createElement(
 	        "p",
 	        null,
-	        "A game by ",
 	        React.createElement(
 	          "a",
 	          { href: "http://www.brianjosephlambert.com" },
-	          "Brian Lambert"
-	        ),
-	        "."
+	          "A game by Brian Lambert"
+	        )
 	      ),
 	      React.createElement(
 	        "p",
 	        null,
-	        "See the ",
 	        React.createElement(
 	          "a",
 	          { href: "https://github.com/keldonia/Wizard-Stones" },
-	          "github repo"
+	          "See the github repo"
 	        )
 	      )
 	    );

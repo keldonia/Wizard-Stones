@@ -37,7 +37,8 @@ section.game-viewport {
   background-image: url('https://c2.staticflickr.com/6/5164/5290154654_4d8949fb71_z.jpg');
   border-radius: 5vw;
   min-width: 48vw;
-  max-height: 58vw;
+  height: 58vw;
+  max-height: 84vh;
   box-shadow: inset 6px 4px rgba(153,153,153,0.2),
   inset -6px -4px rgba(153,153,153,0.2),
   inset 4px 2px rgba(153,153,153,0.1),
@@ -54,9 +55,10 @@ section.game-viewport {
 }
 
 .game-viewport .occupied {
-  margin: 1.5vw auto;
+  margin: 2vh auto;
   width: 8vw;
   height: 9vw;
+  max-height: 14vh;
   border-radius: 50%;
   position: relative;
   box-shadow:
@@ -271,7 +273,7 @@ section.game-viewport {
 
 .power-holder {
     position: relative;
-    top: 2.5vw;
+    top: 2.5vh;
 }
 
 ul {
@@ -292,6 +294,7 @@ ul {
   min-width: 1em;
   height: 13vw;
   min-height: 1em;
+  max-height: 18vh;
   margin: 0.75vw;
   border-radius: 12px;
   font-size: 3vw;
