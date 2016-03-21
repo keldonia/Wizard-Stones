@@ -19660,6 +19660,7 @@
 	var React = __webpack_require__(1);
 	var Header = __webpack_require__(160);
 	var GameHolder = __webpack_require__(185);
+	var Footer = __webpack_require__(224);
 	
 	var GameSplash = React.createClass({
 	  displayName: 'GameSplash',
@@ -19670,7 +19671,8 @@
 	      'div',
 	      null,
 	      React.createElement(Header, null),
-	      React.createElement(GameHolder, null)
+	      React.createElement(GameHolder, null),
+	      React.createElement(Footer, null)
 	    );
 	  }
 	
@@ -30256,6 +30258,46 @@
 	  else this.add(className)
 	}
 
+
+/***/ },
+/* 224 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var PropTypes = React.PropTypes;
+	
+	var Footer = React.createClass({
+	  displayName: "Footer",
+	
+	
+	  render: function () {
+	    return React.createElement(
+	      "div",
+	      { className: "footer" },
+	      React.createElement(
+	        "p",
+	        null,
+	        React.createElement(
+	          "a",
+	          { href: "http://www.brianjosephlambert.com" },
+	          "A game by Brian Lambert"
+	        )
+	      ),
+	      React.createElement(
+	        "p",
+	        null,
+	        React.createElement(
+	          "a",
+	          { href: "https://github.com/keldonia/Wizard-Stones" },
+	          "Github"
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = Footer;
 
 /***/ }
 /******/ ]);
