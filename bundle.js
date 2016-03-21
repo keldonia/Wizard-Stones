@@ -26639,6 +26639,7 @@
 	var GameWindow = __webpack_require__(192);
 	var Explanation = __webpack_require__(203);
 	var Modal = __webpack_require__(204);
+	var Footer = __webpack_require__(224);
 	
 	var GameHolder = React.createClass({
 	  displayName: 'GameHolder',
@@ -26781,7 +26782,8 @@
 	        lostGame,
 	        React.createElement(GameWindow, { board: board })
 	      ),
-	      React.createElement('div', { className: 'group' })
+	      React.createElement('div', { className: 'group' }),
+	      React.createElement(Footer, null)
 	    );
 	  }
 	
@@ -30256,6 +30258,49 @@
 	  else this.add(className)
 	}
 
+
+/***/ },
+/* 224 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var PropTypes = React.PropTypes;
+	
+	var Footer = React.createClass({
+	  displayName: "Footer",
+	
+	
+	  render: function () {
+	    return React.createElement(
+	      "div",
+	      null,
+	      React.createElement(
+	        "p",
+	        null,
+	        "A game by ",
+	        React.createElement(
+	          "a",
+	          { href: "http://www.brianjosephlambert.com" },
+	          "Brian Lambert"
+	        ),
+	        "."
+	      ),
+	      React.createElement(
+	        "p",
+	        null,
+	        "See the ",
+	        React.createElement(
+	          "a",
+	          { href: "https://github.com/keldonia/Wizard-Stones" },
+	          "github repo"
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = Footer;
 
 /***/ }
 /******/ ]);
