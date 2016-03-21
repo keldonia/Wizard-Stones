@@ -323,3 +323,22 @@ li.empty.group {
   display: block;
   clear:  both;
 }
+
+.footer p {
+  text-align: center;
+  margin: 1% auto;
+  font-size: 1.2em;
+}
+
+.footer a {
+  text-decoration: none;
+  color: white;
+}
+
+.footer a:hover {
+  color: red;
+}
+
+.footer {
+  margin-bottom: 20px;
+}

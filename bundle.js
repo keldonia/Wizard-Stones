@@ -19660,6 +19660,7 @@
 	var React = __webpack_require__(1);
 	var Header = __webpack_require__(160);
 	var GameHolder = __webpack_require__(185);
+	var Footer = __webpack_require__(224);
 	
 	var GameSplash = React.createClass({
 	  displayName: 'GameSplash',
@@ -19670,7 +19671,8 @@
 	      'div',
 	      null,
 	      React.createElement(Header, null),
-	      React.createElement(GameHolder, null)
+	      React.createElement(GameHolder, null),
+	      React.createElement(Footer, null)
 	    );
 	  }
 	
@@ -26639,7 +26641,6 @@
 	var GameWindow = __webpack_require__(192);
 	var Explanation = __webpack_require__(203);
 	var Modal = __webpack_require__(204);
-	var Footer = __webpack_require__(224);
 	
 	var GameHolder = React.createClass({
 	  displayName: 'GameHolder',
@@ -26782,8 +26783,7 @@
 	        lostGame,
 	        React.createElement(GameWindow, { board: board })
 	      ),
-	      React.createElement('div', { className: 'group' }),
-	      React.createElement(Footer, null)
+	      React.createElement('div', { className: 'group' })
 	    );
 	  }
 	
@@ -30289,7 +30289,7 @@
 	        React.createElement(
 	          "a",
 	          { href: "https://github.com/keldonia/Wizard-Stones" },
-	          "See the github repo"
+	          "Github"
 	        )
 	      )
 	    );

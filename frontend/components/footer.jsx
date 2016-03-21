@@ -7,7 +7,7 @@ var Footer = React.createClass({
     return (
       <div className="footer">
         <p><a href="http://www.brianjosephlambert.com">A game by Brian Lambert</a></p>
-        <p><a href="https://github.com/keldonia/Wizard-Stones">See the github repo</a></p>
+        <p><a href="https://github.com/keldonia/Wizard-Stones">Github</a></p>
       </div>
     );
   }

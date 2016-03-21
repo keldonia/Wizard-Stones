@@ -5,7 +5,6 @@ var ScoreActions = require('../actions/score_actions');
 var GameWindow = require('./game_window');
 var Explanation = require('./explanation');
 var Modal = require('react-modal');
-var Footer = require('./footer');
 
 var GameHolder = React.createClass({
   getInitialState: function () {
@@ -113,7 +112,6 @@ var GameHolder = React.createClass({
           <GameWindow board={board} />
         </div>
         <div className="group"></div>
-        <Footer />
       </section>
     );
   }
